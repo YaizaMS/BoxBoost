@@ -1,0 +1,41 @@
+<div class="fondo flex flex-col justify-center items-center h-screen">
+    <div class="container flex flex-col  items-center p-4 w-[50vw] max-w-6xl rounded-2xl shadow-2xl">
+        <div class="flex justify-between text-primary w-full items-end p-4">
+            <h1 class="font-montserrat ">REGISTRO</h1>
+            <div class="flex items-center gap-2">
+                <img src="../../assets/image/Logo.png" alt="Logo" class="w-15 h-10">
+                <h1 class="font-montserrat ">BoxBoost</h1>
+            </div>
+        </div>
+        <div class="grid w-full border-4 p-4 shadow-lg border-primary rounded-2xl">
+
+            <div class="flex w-full justify-center items-center ">
+                <div class="grid grid-cols-2 gap-2 w-full">
+                    <div>
+                        <i class="fa-solid fa-circle-info"></i>
+                        <app-input [(value)]="registro.nombre" class="text-white w-full" type="text" placeholder="Nombre" label="Nombre*" ></app-input>
+                        <app-input [(value)]="registro.apellidos" class="text-white w-full" type="text" placeholder="Apellidos" label="Apellidos*"></app-input>
+                        <app-input [(value)]="registro.email" class="text-white w-full" type="text" placeholder="Ej: boxboost@gmail.com" label="Correo electronico*"></app-input>
+                        <app-input [(value)]="registro.edad" class="text-white w-full" type="date" placeholder="Fecha de nacimiento" label="Fecha de nacimiento*"></app-input>
+                    </div>
+                    <div>
+                        <app-input [(value)]="usuario.user" class="text-white w-full" type="text" placeholder="Usuario"
+                            label="Nombre de usuario*"></app-input>
+                        <span class="text-red-500 text-sm font-bold parpadeante">{{userExists}}</span>
+                        <app-input [(value)]="usuario.pass" class="text-white w-full" type="password" placeholder="Contraseña"
+                            label="Contraseña*"></app-input>
+                        <app-input [(value)]="confirmacionPass" class="text-white w-full" type="password" placeholder="Contraseña"
+                            label="Escriba de nuevo la contraseña*"></app-input>
+
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 w-full items-end ">
+                <button (click)="validarRegistro()"  class="btn btn-warning">Registrarse</button>
+                <button [routerLink]="['/login']" routerLinkActive="active" class="btn btn-secondary">¿Ya tienes cuenta?</button>
+            </div>
+    </div>
+
+    </div>
+</div>

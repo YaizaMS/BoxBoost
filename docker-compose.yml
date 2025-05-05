@@ -1,0 +1,17 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "4200:4200"
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: mayroot
+      MYSQL_DATABASE: boxboots
+    ports:
+      - "3308:3306"

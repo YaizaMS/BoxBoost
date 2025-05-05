@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+h1{
+    @apply text-4xl;
+}
+
+.btn{
+    @apply bg-secondary p-2.5 text-center rounded-full cursor-pointer transition-all duration-300 ease-in-out;
+   
+    &:hover{
+        @apply bg-secondary-hover;
+    }
+}
+
+.btn-primary{
+    @apply bg-primary text-white;
+   
+    &:hover{
+        @apply bg-primary-hover;
+    }
+}
+
+.btn-warning{
+    @apply bg-warning text-white ;
+
+    &:hover{
+        @apply bg-warning-hover;  
+    }
+}

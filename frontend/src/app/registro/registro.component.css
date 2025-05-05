@@ -1,0 +1,19 @@
+.fondo {
+    background-image: url(../../assets/image/fondo.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;   
+}
+.container {
+    backdrop-filter: blur(20px);
+}
+
+@keyframes parpadeo {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+  .parpadeante {
+    animation: parpadeo 1.8s linear infinite;
+  }
+  
