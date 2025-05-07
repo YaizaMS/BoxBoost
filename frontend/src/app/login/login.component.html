@@ -11,10 +11,10 @@
        <div class=" flex justify-center items-center">
          <h1 class="text-white font-exo text-3xl md:text-4xl">INICIO DE SESIÓN</h1>
        </div>
-         <app-input class="text-white w-full" type="text" placeholder="Usuario" label="Usuario"></app-input>
-         <app-input class="text-white" type="password" placeholder="Contraseña" label="Contraseña"></app-input>
+         <app-input [(value)]="usuario.user" class="text-white w-full" id="user" type="text" placeholder="Usuario" label="Usuario"></app-input>
+         <app-input [(value)]="usuario.pass" class="text-white" id="pass" type="password" placeholder="Contraseña" label="Contraseña"></app-input>
          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">    
-            <button class="btn btn-primary">Iniciar sesión</button>
+            <button (click)="login()" class="btn btn-primary">Iniciar sesión</button>
             <button [routerLink]="['/register']"  routerLinkActive="active" class="btn btn-secondary">¿No tienes cuenta?</button>
         </div>
     </div>
