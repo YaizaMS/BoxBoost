@@ -12,19 +12,18 @@
             <div class="flex w-full justify-center items-center ">
                 <div class="grid grid-cols-2 gap-2 w-full">
                     <div>
-                        <i class="fa-solid fa-circle-info"></i>
-                        <app-input [(value)]="registro.nombre" class="text-white w-full" type="text" placeholder="Nombre" label="Nombre*" ></app-input>
-                        <app-input [(value)]="registro.apellidos" class="text-white w-full" type="text" placeholder="Apellidos" label="Apellidos*"></app-input>
-                        <app-input [(value)]="registro.email" class="text-white w-full" type="text" placeholder="Ej: boxboost@gmail.com" label="Correo electronico*"></app-input>
-                        <app-input [(value)]="registro.edad" class="text-white w-full" type="date" placeholder="Fecha de nacimiento" label="Fecha de nacimiento*"></app-input>
+                        <app-input [(value)]="registro.nombre" id="nombre" class="text-white w-full" type="text" placeholder="Nombre" label="Nombre*" ></app-input>
+                        <app-input [(value)]="registro.apellidos" id="apellidos" class="text-white w-full" type="text" placeholder="Apellidos" label="Apellidos*"></app-input>
+                        <app-input [(value)]="registro.email" id="email" class="text-white w-full" type="text" placeholder="Ej: boxboost@gmail.com" label="Correo electronico*"></app-input>
+                        <app-input [(value)]="registro.edad" id="edad" class="text-white w-full" type="date" placeholder="Fecha de nacimiento" label="Fecha de nacimiento*"></app-input>
                     </div>
                     <div>
-                        <app-input [(value)]="usuario.user" class="text-white w-full" type="text" placeholder="Usuario"
+                        <app-input [(value)]="usuario.user" id="user" class="text-white w-full" type="text" placeholder="Usuario"
                             label="Nombre de usuario*"></app-input>
-                        <span class="text-red-500 text-sm font-bold parpadeante">{{userExists}}</span>
-                        <app-input [(value)]="usuario.pass" class="text-white w-full" type="password" placeholder="Contraseña"
+                        <!-- <span class="text-red-500 text-sm font-bold parpadeante">{{txtUserExists === true ? 'El usuario ya existe' : ''}}</span> -->
+                        <app-input [(value)]="usuario.pass" id="pass" class="text-white w-full" type="password" placeholder="Contraseña"
                             label="Contraseña*"></app-input>
-                        <app-input [(value)]="confirmacionPass" class="text-white w-full" type="password" placeholder="Contraseña"
+                        <app-input [(value)]="confirmacionPass" id="passs" class="text-white w-full" type="password" placeholder="Contraseña"
                             label="Escriba de nuevo la contraseña*"></app-input>
 
                     </div>

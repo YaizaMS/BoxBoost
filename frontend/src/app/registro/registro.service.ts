@@ -10,8 +10,11 @@ export class RegisterService {
   
   constructor(private http: HttpClient) {}
 
-  registrar = ( registro: {nombre: string, apellidos: string, email: string, edad: Date | null}) => {
-    return this.http.post(`${this.api}/registro/`, registro );}
+  registrar = 
+  ( registro: {nombre: string, apellidos: string, email: string, edad: Date | null}, usuario: { user: string, pass: string}) => {
+    const body = { ...registro, ...usuario };
+    return this.http.post<{token: string}>(`${this.api}/registro/`, body );
+  }
 
   validarUsuario = (user:string) => {return this.http.get(`${this.api}/registro/${user}`);}
 }

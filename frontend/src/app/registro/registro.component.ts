@@ -1,8 +1,9 @@
-import { Component, inject, NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { InputComponent } from '../../components/input/input';
 import { RegisterService } from './registro.service';
 import Swal from 'sweetalert2';
+import { CloseScrollStrategy } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-register',
@@ -25,98 +26,142 @@ export class RegisterComponent {
   };
 
   confirmacionPass = '';
-  userExists = 'El usuario ya existe';
-
+  txtUserExists = false;
 
   private service = inject(RegisterService);
-  
+  private router = inject(Router);
 
-  validarRegistro(){
-    //this.camposVacios();
-    //this.validarCorreo();
-    //this.validarFecha();
-    //this.validacionContraseña();
-  }
 
-  camposVacios(){
-    if (this.registro.nombre === '' || this.registro.nombre == null || this.registro.nombre == undefined) {
+  camposVacios(): boolean {
+    if (this.registro.nombre === '') {
       Swal.fire({ title: "Error de registro", icon: "error", text: "El nombre no puede estar vacio", draggable: true });
+      return false;
     } else if (!this.registro.apellidos) {
       Swal.fire({ title: "Error de registro", icon: "error", text: "El apellidos no puede estar vacio", draggable: true });
+      return false;
     } else if (!this.registro.email) {
       Swal.fire({ title: "Error de registro", icon: "error", text: "El email no puede estar vacio", draggable: true });
+      return false;
     } else if (this.registro.edad === null) {
       Swal.fire({ title: "Error de registro", icon: "error", text: "Debes agregar una fecha de nacimiento", draggable: true });
+      return false;
     } else if (this.usuario.user === '') {
       Swal.fire({ title: "Error de registro", icon: "error", text: "El usuario no puede estar vacio", draggable: true });
+      return false;
     } else if (this.usuario.pass === '') {
       Swal.fire({ title: "Error de registro", icon: "error", text: "La contraseña no puede estar vacia", draggable: true });
+      return false;
     } else if (this.confirmacionPass === '') {
       Swal.fire({ title: "Error de registro", icon: "error", text: "La confirmación de contraseña no puede estar vacia", draggable: true });
-    } else{
-      console.log(this.registro, this.usuario, this.confirmacionPass)
+      return false;
+    } else {
+      return true;
     }
   }
 
-  validarCorreo() : boolean{
+  validarCorreo(): boolean {
     let valido = false;
     let emailExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-    if(emailExp.test(this.registro.email)){
+    if (emailExp.test(this.registro.email)) {
       valido = true;
-    }else{
+    } else {
       Swal.fire({ title: "Error de registro", icon: "error", text: "El email no es valido", draggable: true });
     }
 
     return valido;
-    
+
   }
-
-  validarFecha(){
-    if (this.registro.edad === null) return;
-
+  
+  validarFecha(): boolean {
+    if (this.registro.edad === null) return false;
+  
     const hoy = new Date();
-    const fecha = new Date(this.registro.edad);
-    let edad = hoy.getFullYear() - fecha.getFullYear();
-    const mes = hoy.getMonth() - fecha.getMonth();
+    const fechaNacimiento = new Date(this.registro.edad);
+  
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
 
-    if (mes < 0 || (mes === 0 && hoy.getDate() < fecha.getDate())) {
-       if (edad < 15) {
-      Swal.fire({ title: "Error de registro", icon: "error", text: "Debes ser mayor de 15 años", draggable: true });
-       }
-    }else{
-      return
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+      edad--;
     }
+
+    if (edad < 15) {
+      Swal.fire({
+        title: "Error de registro",
+        icon: "error",
+        text: "Debes ser mayor de 15 años",
+        draggable: true,
+      });
+      return false;
+    }
+  
+    return true; 
+  }
+  
+  //Esta vacio
+  validacionUsuario() {
+
+    /*this.service.validarUsuario(this.usuario.user).subscribe( {
+      next: res => {
+        
+    },
+      error: err => {
+      }
+    });*/
+
+
   }
 
-  validacionUsuario(){
-    
+  validacionContrasenya(): boolean {
 
-  }
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
 
-  validacionContraseña():boolean{
-    if(this.confirmacionPass === this.usuario.pass){
-      return true;
-    }else{
-      Swal.fire({ title: "Error de registro", icon: "error", text: "Las contraseñas no coinciden", draggable: true });
-      this.confirmacionPass = '';
+    if (regex.test(this.usuario.pass)) {
+      if (this.confirmacionPass === this.usuario.pass) {
+        return true;
+      } else {
+        Swal.fire({ title: "Error de registro", icon: "error", text: "Las contraseñas no coinciden", draggable: true });
+        this.confirmacionPass = '';
+        this.usuario.pass = '';
+        return false;
+      }
+    } else {
+      Swal.fire({ title: "Error de registro", icon: "error", text: "La contraseña debe contener minimo 8 caracteres y al menos una letra mayúscula, una letra minúscula, un número y un carácter especial", draggable: true });
       this.usuario.pass = '';
       return false;
     }
   }
 
+  validarRegistro() {
+   const camposValidos = this.camposVacios();
+   const correoValido = this.validarCorreo();
+   const fechaValida = this.validarFecha();
+   const passValida = this.validacionContrasenya();
+   
+   if (camposValidos && correoValido && fechaValida && passValida) {
+     this.registrar();
+   } 
+
+  }
   registrar() {
     if (this.registro.edad === null) return;
+    
 
-    this.service.registrar(this.registro).subscribe({
-      next: res =>
+    this.service.registrar(this.registro, this.usuario).subscribe({
+      next: (res) => {
+        const token = res.token;
+      if (token) {
+        localStorage.setItem('token', token);
         Swal.fire({
           title: "Registro exitoso",
           icon: "success",
           text: "El usuario ha sido registrado con éxito",
           draggable: true
-        }),
-      error: err => {
+        })
+      }
+      },
+      error: (err) => {
         Swal.fire({
           title: "Error en el registro",
           icon: "error",
@@ -126,6 +171,7 @@ export class RegisterComponent {
         console.error('Error:', err);
       }
     });
+    this.router.navigate(['/home']);
   }
 
 
