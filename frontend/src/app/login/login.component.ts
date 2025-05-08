@@ -38,7 +38,6 @@ export class LoginComponent {
     if (this.camposVacios()) {
       this.auth.login(this.usuario).subscribe({
         next: (res) => {
-          localStorage.setItem('token', res.token);
           this.router.navigate(['/home']);
         },
         error: (err) => {

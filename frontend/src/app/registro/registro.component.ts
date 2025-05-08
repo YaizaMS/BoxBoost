@@ -129,6 +129,7 @@ export class RegisterComponent {
     } else {
       Swal.fire({ title: "Error de registro", icon: "error", text: "La contraseña debe contener minimo 8 caracteres y al menos una letra mayúscula, una letra minúscula, un número y un carácter especial", draggable: true });
       this.usuario.pass = '';
+      this.confirmacionPass = '';
       return false;
     }
   }

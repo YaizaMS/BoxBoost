@@ -23,7 +23,7 @@
                         <!-- <span class="text-red-500 text-sm font-bold parpadeante">{{txtUserExists === true ? 'El usuario ya existe' : ''}}</span> -->
                         <app-input [(value)]="usuario.pass" id="pass" class="text-white w-full" type="password" placeholder="Contraseña"
                             label="Contraseña*"></app-input>
-                        <app-input [(value)]="confirmacionPass" id="passs" class="text-white w-full" type="password" placeholder="Contraseña"
+                        <app-input (keyup.enter)="validarRegistro()" [(value)]="confirmacionPass" id="passs" class="text-white w-full" type="password" placeholder="Contraseña"
                             label="Escriba de nuevo la contraseña*"></app-input>
 
                     </div>

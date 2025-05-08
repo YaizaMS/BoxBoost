@@ -3,6 +3,17 @@ import { Injectable } from '@angular/core';
 import  { tap } from 'rxjs/operators';
 import {jwtDecode} from 'jwt-decode';
 
+interface TokenPayload {
+  id: number;
+  usuario: string;
+  pass: string;
+  email: string;
+  edad: number;
+  nombre: string;
+  apellidos: string;
+  iat: number;
+  exp: number;
+}
 
 
 
@@ -18,7 +29,6 @@ export class AuthService {
   login(usuario: { user: string; pass: string }) {
     return this.http.post<{ token: string }>(`${this.api}/login/`, usuario).pipe(
       tap((res) => {
-        console.log('Auth', usuario);
         localStorage.setItem('token', res.token);
       })
     );
@@ -37,11 +47,13 @@ export class AuthService {
   }
 
   getLoggedUser() {
-    /*const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+
     if (token) {
       const decoded = jwtDecode<TokenPayload>(token);
-      const user = decoded.username;
-      console.log('usuario', user);
-    }*/
+      const nombre = decoded.nombre;
+      localStorage.setItem('nombre', nombre);
+    }
+    
   }
 }

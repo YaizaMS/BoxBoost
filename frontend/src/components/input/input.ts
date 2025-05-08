@@ -12,6 +12,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         [placeholder]="placeholder"
         [value]="value"
         (input)="onInput($event)"
+        (keyup.enter)="onInput($event)"
       />
     </div>
   `,

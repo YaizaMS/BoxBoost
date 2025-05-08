@@ -11,7 +11,9 @@ module.exports = {
         'secondary': '#e0e0e0',
         'secondary-hover': '#c4c4c4',
         'warning': '#ffc800',
-        'warning-hover': '#e6b300'
+        'warning-hover': '#e6b300',
+        'azul': '#0073B1',
+        'gris': '#808080',
 
     },
     fontFamily: {

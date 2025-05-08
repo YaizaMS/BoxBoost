@@ -8,7 +8,10 @@ export async function login(usuario: { user: string, pass: string }) {
     const conn = await conexion.getConnection();
     try {
          const [rows]: any = await conn.execute(
-            `SELECT * FROM usuarios WHERE user = ?`,
+            `select * 
+            from usuarios U 
+            left join datosUser DU ON DU.id = U.id_datosUser 
+            where user = ?;`,
             [usuario.user]
          );
 
@@ -19,12 +22,19 @@ export async function login(usuario: { user: string, pass: string }) {
          console.log(cifrado);
          if(!cifrado) throw new Error('Contraseña incorrecta');
 
-         const token = jwt.sign(
-            {id: usu.id_datosUser, user: usu.user},
+         const token = jwt.sign({
+            id: usu.id_datosUser, 
+            usuario: usu.user,
+            pass: usu.pass,
+            email: usu.email,
+            edad: usu.edad,
+            nombre: usu.nombre,
+            apellidos: usu.apellidos
+         },
             SECRET_KEY,
             { expiresIn: '1h' }
          );
-         return token;
+         return { token };
     } catch (error) {
         
     }
