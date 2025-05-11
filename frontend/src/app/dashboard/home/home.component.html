@@ -1,26 +1,27 @@
-
 <div class="w-full h-screen flex flex-row">
     <!-- Aqui esta la ventana principal -->
     <div class="bg-secondary w-full h-full">
-        <div class="p-2">
-            <strong class="text-primary font-exo text-3xl">Bienvenido/a {{ nombreUsuario }}</strong>
+        <div class="bg-primary p-4 sm:items-center">
+            <h1 class="text-white text-3xl font-exo p-4">Bienvenido/a {{ nombreUsuario }}</h1>
         </div>
         <div>
-            <div class="grid grid-cols-2 gap-4 p-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-2">
                 <!-- Calendario -->
                 <div class=" shadow-[2px_2px_10px_rgba(0,0,0,0.2)] rounded-lg flex flex-col ">
-                    <header 
-                    class=" flex gap-4 items-center bg-primary-hover rounded-t-lg  border-t-[1px] border-l-[1px] border-r-[1px] border-primary p-4">
+                    <header
+                        class=" flex gap-4 items-center bg-primary-hover rounded-t-lg  border-t-[1px] border-l-[1px] border-r-[1px] border-primary p-4">
                         <div class="flex items-center w-full relative p-2">
                             <div class="flex items-center w-full relative ">
                                 <button (click)="anteriorMes()" class="absolute left-5">
-                                    <i class="text-secondary fa-solid fa-arrow-left text-xl transition duration-200 hover:scale-125"></i>
+                                    <i
+                                        class="text-secondary fa-solid fa-arrow-left text-xl transition duration-200 hover:scale-125"></i>
                                 </button>
                                 <div class="absolute left-1/2 tranform -translate-x-1/2">
                                     <strong class="text-white text-2xl"> {{nombreMes}}</strong>
                                 </div>
                                 <button (click)="siguienteMes()" class="absolute right-5">
-                                    <i class="text-secondary fa-solid fa-arrow-right text-xl transition duration-200 hover:scale-125"></i>
+                                    <i
+                                        class="text-secondary fa-solid fa-arrow-right text-xl transition duration-200 hover:scale-125"></i>
                                 </button>
                             </div>
                         </div>
@@ -28,60 +29,63 @@
                     <div class="m-2 border-b-2 border-primary rounded-t-md">
                         <div class="grid grid-cols-7 gap-2">
                             @for (d of diasSemana; track $index) {
-                                <strong class="flex justify-center items-center text-2xl font-exo text-primary">
-                                    {{d.charAt(0)}}
-                                </strong>
+                            <strong class="flex justify-center items-center text-2xl font-exo text-primary">
+                                {{d.charAt(0)}}
+                            </strong>
                             }
                         </div>
                     </div>
                     <div class="m-2 bg-secondary rounded-b-md">
                         <div class="grid grid-cols-7 gap-2 py-2 place-items-center">
                             @for (dia of dias; track $index) {
-                                <div class="flex items-center justify-center w-9 h-9 rounded-full  text-base font-medium" 
-                                [ngClass]="{'bg-gris': comparoDia(dia.fecha!), 'bg-secondary': !comparoDia(dia.fecha!)}"
-                                >
-                                    <div class="flex flex-col justify-center p-1">
-                                        <span class="text-center font-exo text-xl">
-                                            {{dia.fecha | date:'dd'}}
-                                        </span>
-                                    </div>
+                            <div class="flex items-center justify-center w-9 h-9 rounded-full  text-base font-medium"
+                                [ngClass]="{'bg-gris': comparoDia(dia.fecha!), 'bg-secondary': !comparoDia(dia.fecha!)}">
+                                <div class="flex flex-col justify-center p-1">
+                                    <span class="text-center font-exo text-xl">
+                                        {{dia.fecha | date:'dd'}}
+                                    </span>
                                 </div>
+                            </div>
                             }
                         </div>
                     </div>
                 </div>
                 <!-- Notificaciones -->
-                 <div class="shadow-[2px_2px_10px_rgba(0,0,0,0.2)] rounded-lg flex flex-col">
-                    <header class="flex gap-4 justify-center items-center bg-primary-hover rounded-t-lg  border-t-[1px] border-l-[1px] border-r-[1px] border-primary p-2">
+                <div class="shadow-[2px_2px_10px_rgba(0,0,0,0.2)] rounded-lg flex flex-col">
+                    <header
+                        class="flex gap-4 justify-center items-center bg-primary-hover rounded-t-lg  border-t-[1px] border-l-[1px] border-r-[1px] border-primary p-2">
                         <strong class="text-white text-2xl">Notificaciones</strong>
                     </header>
                     <div class="flex flex-col w-full h-full gap-2 p-2">
                         @if(notificaciones.length > 0) {
-                            @for (n of notificaciones; track $index) {
-                                <div class="flex gap-2 items-center bg-secondary rounded-lg p-2">
-                                    <div class="flex items-center w-full relative ">
-                                        <div class="flex items-center w-full relative ">
-                                            <button (click)="anteriorMes()" class="absolute left-5">
-                                                <i class="text-secondary fa-solid fa-arrow-left text-xl transition duration-200 hover:scale-125"></i>
-                                            </button>
-                                            <div class="absolute left-1/2 tranform -translate-x-1/2">
-                                                <strong class="text-white text-2xl"> {{n.titulo}}</strong>
-                                            </div>
-                                            <button (click)="siguienteMes()" class="absolute right-5">
-                                                <i class="text-secondary fa-solid fa-arrow-right text-xl transition duration-200 hover:scale-125"></i>
-                                            </button>
-                                        </div>
+                        @for (n of notificaciones; track $index) {
+                        <div class="flex gap-2 items-center bg-secondary rounded-lg p-2">
+                            <div class="flex items-center w-full relative ">
+                                <div class="flex items-center w-full relative ">
+                                    <button (click)="anteriorMes()" class="absolute left-5">
+                                        <i
+                                            class="text-secondary fa-solid fa-arrow-left text-xl transition duration-200 hover:scale-125"></i>
+                                    </button>
+                                    <div class="absolute left-1/2 tranform -translate-x-1/2">
+                                        <strong class="text-white text-2xl"> {{n.titulo}}</strong>
                                     </div>
+                                    <button (click)="siguienteMes()" class="absolute right-5">
+                                        <i
+                                            class="text-secondary fa-solid fa-arrow-right text-xl transition duration-200 hover:scale-125"></i>
+                                    </button>
                                 </div>
-                            }}@else {
-                                <div class="flex flex-col w-full h-full gap-2 items-center justify-center aling-center">
-                                    <strong class="text-primary/60 font-exo text-3xl">No tienes ninguna notificación 😊</strong>
-                                    <strong class="text-primary/60 font-exo text-sm">(Esta funcionalidad estará disponible pronto)</strong>
-                                </div>
-                            }
+                            </div>
+                        </div>
+                        }}@else {
+                        <div class="flex flex-col w-full h-full gap-2 items-center justify-center">
+                            <strong class="text-primary/60 font-exo text-2xl">¡Sin notificaciones por ahora! 😊</strong>
+                            <strong class="text-primary/60 font-exo text-sm">(Pronto activaremos esta
+                                funcionalidad)</strong>
+                        </div>
+
+                        }
                     </div>
-                 </div>
-                 
+                </div>
             </div>
         </div>
     </div>

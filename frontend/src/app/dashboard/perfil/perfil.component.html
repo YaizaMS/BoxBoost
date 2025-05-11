@@ -1,1 +1,44 @@
-<p>perfil works!</p>
+<div>
+  <div class="bg-primary p-4 sm:items-center">
+    <h1 class="text-white text-3xl font-exo p-4">PERFIL</h1>
+  </div>
+
+  <div class="m-4 flex flex-col gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-secondary rounded-lg p-4 space-y-2">
+        @for (n of usuarios; track $index) {
+          <div>
+            <p><strong class="text-primary font-exo text-2xl">Nombre: </strong>
+            <span class="font-exo text-xl">{{ n.nombre }} {{ n.apellidos }}</span></p>
+
+            <p><strong class="text-primary font-exo text-2xl">Email: </strong>
+            <span class="font-exo text-xl">{{ n.email }}</span></p>
+
+            <p><strong class="text-primary font-exo text-2xl">Fecha de nacimiento: </strong>
+            <span class="font-exo text-xl">{{ n.edad | date: 'dd/MM/yyyy' }}</span></p>
+          </div>
+        }
+      </div>
+
+      <div class="bg-secondary rounded-lg p-4 space-y-2">
+        <p><strong class="text-primary font-exo text-2xl">Perfil: </strong>
+        <span class="font-exo text-xl"></span></p>
+
+        <p><strong class="text-primary font-exo text-2xl">Propósito: </strong>
+        <span class="font-exo text-xl"></span></p>
+
+        <p><strong class="text-primary font-exo text-2xl">Días de entrenamiento: </strong>
+        <span class="font-exo text-xl"></span></p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="flex justify-center md:justify-end">
+        <button class="btn btn-primary" (click)="cerrarSesion()">Cerrar sesión</button>
+      </div>
+      <div class="flex justify-center md:justify-start">
+        <button class="btn btn-outline-danger" (click)="eliminarCuenta()">Eliminar cuenta</button>
+      </div>
+    </div>
+  </div>
+</div>

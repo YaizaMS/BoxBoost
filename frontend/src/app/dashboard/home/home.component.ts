@@ -51,12 +51,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.getLoggedUser(); //Obtiene el nombre del usuario logueado
-    console.log(this.nombreUsuario);
 
     this.hoy = new Date().toISOString().substring(0, 10);
     this.year = +this.hoy.substring(0, 4);
     this.generarDiasMes();
-    console.log(this.dias, this.nombreMes);
 
   }
 

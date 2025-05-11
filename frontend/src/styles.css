@@ -30,7 +30,20 @@ h1{
         @apply bg-warning-hover;  
     }
 }
+.btn-danger{
+    @apply bg-danger text-white;
 
+    &:hover{
+        @apply bg-danger-hover;
+    }
+}
+.btn-outline-danger{
+    @apply bg-transparent text-danger border-2 border-danger;
+    
+    &:hover{
+        @apply bg-danger-hover/20 text-danger;
+    }
+}
 
   
   

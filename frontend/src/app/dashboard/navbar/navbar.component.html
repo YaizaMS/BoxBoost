@@ -1,22 +1,20 @@
-<div class="bg-primary w-20 h-full flex flex-col items-center justify-between">
-    <div class="py-2 grid grid-rows-4 gap-5 items-center ">
-        <div class="p-2" [ngClass]="rutaActual('/dashboard/home') ? 'rounded bg-secondary text-primary' : 'text-secondary' ">
-            <i matTooltip="Home" class="  cursor-pointer text-3xl fa-solid fa-house" (click)="navegar('/dashboard/home')"></i>
-        </div>
-        <div class="p-2" [ngClass]="rutaActual('/dashboard/ejercicios') ? 'rounded bg-secondary text-primary' : 'text-secondary' ">
-            <i matTooltip="Ejercicios"
-                class="items-center cursor-pointer text-4xl fa-solid fa-calendar-days"></i>
-        </div>
-        <div class="p-2" [ngClass]="rutaActual('/dashboard/chat') ? 'rounded bg-secondary text-primary' : 'text-secondary' ">
-            <i matTooltip="Chat" class=" cursor-pointer text-3xl fa-solid fa-comments"
-                (click)="navegar('/dashboard/chat')"></i>
-        </div>
-        <div class="p-2" [ngClass]="rutaActual('/info') ? 'rounded bg-secondary text-primary' : 'text-secondary' ">
-            <i matTooltip="Info" class=" cursor-pointer text-4xl fa-solid fa-info-circle"></i>
-        </div>
+<div class="bg-primary w-full md:w-20 h-20 md:h-full flex md:flex-col items-center justify-between">
+  <div class="flex md:grid md:grid-rows-4 gap-5 items-center py-2 md:py-4 m-2">
+    <div class="p-2" [ngClass]="rutaActual('/dashboard/home') ? 'rounded bg-secondary text-primary' : 'text-secondary'">
+      <i matTooltip="Home" class="cursor-pointer text-3xl fa-solid fa-house" (click)="navegar('/dashboard/home')"></i>
     </div>
-    <div class="justify-end p-2 items-center" [ngClass]="rutaActual('/dashboard/perfil') ? 'rounded bg-secondary text-primary' : 'text-secondary' ">
-        <i matTooltip="Cerrar sesión" (click)="navegar('/dashboard/perfil')"
-            class=" cursor-pointer text-3xl fa-solid fa-user"></i>
+    <div class="p-2" [ngClass]="rutaActual('/dashboard/ejercicios') ? 'rounded bg-secondary text-primary' : 'text-secondary'">
+      <i matTooltip="Ejercicios" class="cursor-pointer text-4xl fa-solid fa-calendar-days" (click)="navegar('/dashboard/ejercicios')"></i>
     </div>
+    <div class="p-2" [ngClass]="rutaActual('/dashboard/chat') ? 'rounded bg-secondary text-primary' : 'text-secondary'">
+      <i matTooltip="Chat" class="cursor-pointer text-3xl fa-solid fa-comments" (click)="navegar('/dashboard/chat')"></i>
+    </div>
+    <div class="p-2" [ngClass]="rutaActual('/info') ? 'rounded bg-secondary text-primary' : 'text-secondary'">
+      <i matTooltip="Info" class="cursor-pointer text-4xl fa-solid fa-info-circle" (click)="navegar('/info')"></i>
+    </div>
+  </div>
+
+  <div class="p-2 m-2" [ngClass]="rutaActual('/dashboard/perfil') ? 'rounded bg-secondary text-primary' : 'text-secondary'">
+    <i matTooltip="Perfil" class="cursor-pointer text-3xl fa-solid fa-user" (click)="navegar('/dashboard/perfil')"></i>
+  </div>
 </div>

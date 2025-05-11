@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import registroRouter from './registro/registroController';
 import loginRouter from './login/loginController';
-import perfilRouter from './perfil/perfilController';
+import perfilRouter from './dashboard/perfil/perfilController';
 
 const router = Router();
 
