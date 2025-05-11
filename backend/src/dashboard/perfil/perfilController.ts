@@ -10,7 +10,6 @@ perfilRouter.get(
             const id = req.params.id;
             const result = await getUsuario(id);
             res.status(200).json(result);
-            console.log(result);
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: 'Error al validar el usuario' });

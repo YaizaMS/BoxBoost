@@ -21,8 +21,6 @@ export class LoginComponent {
     pass: ''
   };
 
-
-  private service = inject(LoginService);
   private router = inject(Router);
   private auth = inject(AuthService);
 

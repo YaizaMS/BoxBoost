@@ -161,6 +161,7 @@ export class RegisterComponent {
           draggable: true
         })
       }
+      this.router.navigate(['/home']);
       },
       error: (err) => {
         Swal.fire({
@@ -172,7 +173,7 @@ export class RegisterComponent {
         console.error('Error:', err);
       }
     });
-    this.router.navigate(['/home']);
+    
   }
 
 
