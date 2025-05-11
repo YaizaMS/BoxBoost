@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import registroRouter from './registro/registroController';
 import loginRouter from './login/loginController';
+import perfilRouter from './perfil/perfilController';
 
 const router = Router();
 
@@ -8,6 +9,8 @@ const router = Router();
 router.use( '/registro', registroRouter ) 
 
 router.use('/login', loginRouter )
+
+router.use('/perfil', perfilRouter )
 
 
 

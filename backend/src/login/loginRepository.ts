@@ -19,7 +19,6 @@ export async function login(usuario: { user: string, pass: string }) {
          if(!usu) throw new Error('Usuario no encontrado');
 
          const cifrado = await bcrypt.compare(usuario.pass, usu.pass);
-         console.log(cifrado);
          if(!cifrado) throw new Error('Contraseña incorrecta');
 
          const token = jwt.sign({
@@ -29,7 +28,9 @@ export async function login(usuario: { user: string, pass: string }) {
             email: usu.email,
             edad: usu.edad,
             nombre: usu.nombre,
-            apellidos: usu.apellidos
+            apellidos: usu.apellidos,
+            perfil: usu.perfil,
+            proposito: usu.proposito
          },
             SECRET_KEY,
             { expiresIn: '1h' }

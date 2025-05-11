@@ -15,8 +15,6 @@ interface TokenPayload {
   exp: number;
 }
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -51,8 +49,11 @@ export class AuthService {
 
     if (token) {
       const decoded = jwtDecode<TokenPayload>(token);
+      const id = decoded.id;
       const nombre = decoded.nombre;
       localStorage.setItem('nombre', nombre);
+      localStorage.setItem('id', id.toString());
+
     }
     
   }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -25,6 +25,6 @@ export class AppComponent implements OnInit {
         next: (data) => console.log('Respuesta backend:', data),
         error: (err) => console.error('Error:', err)
       });
-    this.auth.isLoggedIn() ? this.router.navigate(['/home']) : this.router.navigate(['/login']);
+    this.auth.isLoggedIn() ? this.router.navigate(['/dashboard/home']) : this.router.navigate(['/login']);
   }
 }

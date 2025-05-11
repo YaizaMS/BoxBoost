@@ -3,19 +3,32 @@ import { NavbarComponent } from "../navbar/navbar.component";
 import { AuthService } from '../../auth.service';
 import { DatePipe, NgClass } from '@angular/common';
 
-export type Ejercicios = {
-
+export type Notificaciones = {
+  id: number,
+  persona: string,
+  titulo: string,
+  fecha: Date,
+  mensaje: string
 }
 
+export type Ejercicios = {
+  id: number,
+  fecha: Date,
+  hora: Date,
+  titulo: string,
+  descripcion: string,  
+  estado: boolean
+}
 @Component({
   selector: 'app-home',
-  imports: [NavbarComponent, NgClass, DatePipe],
+  imports: [NgClass, DatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
 
   //Variables calendario
+  notificaciones: Notificaciones[] = [];
   ejercicios: Ejercicios[] = [];
   hoy = '';
   year = 0;

@@ -38,7 +38,7 @@ export class LoginComponent {
     if (this.camposVacios()) {
       this.auth.login(this.usuario).subscribe({
         next: (res) => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/dashboard/home']);
         },
         error: (err) => {
           Swal.fire({
