@@ -161,7 +161,7 @@ export class RegisterComponent {
           draggable: true
         })
       }
-      this.router.navigate(['/home']);
+      this.router.navigate(['/registro/seleccion']);
       },
       error: (err) => {
         Swal.fire({

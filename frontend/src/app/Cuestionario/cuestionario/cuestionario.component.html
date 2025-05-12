@@ -1,0 +1,83 @@
+<div class="fondo flex flex-col justify-center items-center min-h-screen px-4">
+    <div class="w-fit max-w-5xl bg-white/5 backdrop-blur-md rounded-2xl shadow-2xl p-4">
+        <div class="flex flex-col sm:flex-row justify-between items-center text-primary w-full gap-4 mb-4">
+            <div class="flex gap-4 items-center w-full sm:w-auto ">
+                <button [routerLink]="['/seleccion']" class="btn btn-primary !px-4 rounded"><i
+                        class="fa-solid fa-arrow-left"></i></button>
+                <h1 class="font-montserrat text-2xl sm:text-3xl sm:justify-center">Cuestionario</h1>
+            </div>
+            <div class="flex items-center gap-2">
+                <img src="../../assets/image/Logo.png" alt="Logo" class="w-15 h-10" />
+                <h1 class="font-montserrat text-xl sm:text-2xl">BoxBoost</h1>
+            </div>
+        </div>
+        <div class="max-w-xl mx-auto mt-10">
+            <span class="block px-4 mb-3 text-lg text-primary font-exo text-center">
+                Necesitamos que rellenes este pequeño cuestionario 
+                <br>
+                (Todos los campos son obligatorios)
+            </span>
+            <div class="w-full border-4 border-primary px-8 py-4 rounded-2xl shadow-lg">
+                <!-- Código de entrenador -->
+                <app-input id="codigo" label="Código de entrenador" placeholder="Ej: 123456789"
+                    [(value)]="cuestionario.codigo">
+                </app-input>
+
+                <!-- Género -->
+                <app-select id="genero" label="Género" [options]="[
+                    { value: '', label: 'Selecciona un género' },
+                    { value: 'Hombre', label: 'Hombre' },
+                    { value: 'Mujer', label: 'Mujer' },
+                    { value: 'Otro', label: 'Otro' },
+                    { value: 'Prefiero no decirlo', label: 'Prefiero no decirlo' }
+                    ]" [(value)]="cuestionario.genero">
+                </app-select>
+
+                <!-- Propósito -->
+                <app-select id="proposito" label="Propósito" [options]="[
+                    { value: '', label: 'Selecciona un propósito' },
+                    { value: 'Quema de grasa', label: 'Quema de grasa' },
+                    { value: 'Ganar masa muscular', label: 'Ganar masa muscular' },
+                    { value: 'Mejorar resistencia cardiovascular', label: 'Mejorar resistencia cardiovascular' },
+                    { value: 'Aumentar fuerza', label: 'Aumentar fuerza' },
+                    { value: 'Mejorar flexibilidad', label: 'Mejorar flexibilidad' },
+                    { value: 'Preparación para competición', label: 'Preparación para competición' },
+                    { value: 'Mantenimiento general', label: 'Mantenimiento general' }
+                ]" [(value)]="cuestionario.proposito">
+                </app-select>
+
+                <!-- Disponibilidad -->
+                <div class="my-6">
+                    <label class="font-exo block mb-3">Disponibilidad:</label>
+                    <div class="flex gap-3 flex-wrap">
+                        @for (dia of diasSemana; track $index) {
+                        <button type="button"
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-lg font-exo font-bold uppercase transition border-2 border-primary shadow-sm focus:outline-none focus:ring-2 focus:ring-primary hover:bg-primary hover:text-white"
+                            [ngClass]="{
+                                'bg-primary text-white': diasSeleccionados.includes(dia.nombre),
+                                'text-primary': !diasSeleccionados.includes(dia.nombre)
+                            }" [value]="dia.nombre" (click)="toggleDia(dia.nombre)">
+                            {{ dia.inicial }}
+                        </button>
+                        }
+                    </div>
+                </div>
+
+                <!-- Material en casa -->
+                <app-select id="materialCasa" label="¿Tienes material en casa?" [options]="[
+                    { value: '', label: 'Selecciona una opción' },
+                    { value: 'si', label: 'Sí' },
+                    { value: 'no', label: 'No' },
+                    { value: 'no-compra', label: 'No, pero me puedo comprar' }
+                ]" [(value)]="cuestionario.material">
+                </app-select>
+                <div class="flex justify-end ">
+                    <button class="btn btn-primary">Enviar</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

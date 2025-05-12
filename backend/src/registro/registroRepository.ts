@@ -59,18 +59,7 @@ export async  function registro(registro : {nombre: string, apellidos: string, e
 }
 
 
-/*export function registro(registro : {nombre: string, apellidos: string, email: string, edad: Date}) {
-    const sql = `INSERT INTO datosUser (nombre, apellidos, edad, email) 
-                VALUES (?,?,?,?)`;
-    return conexion.query(sql, [registro.nombre, registro.apellidos, registro.edad, registro.email,]);
-}
-
-export function recuperarId() {
-  const sql = ``;
-  return conexion.query(sql);
-}*/
-
-
+/*
 export function loginNuevoUser(usuario : {user: string, pass: string}) {
     const sql = `INSERT INTO usuarios (id_datosUser, iduser, pass)
                 VALUES (?,?,?)`;
@@ -81,6 +70,6 @@ export function validacionUser(user: string) {
     const sql = `Select user from usuarios where user = ?`;
 
     return conexion.query(sql, [user]);
-}
+}*/
 
   

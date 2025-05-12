@@ -6,21 +6,30 @@ import { HomeComponent } from './dashboard/home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PerfilComponent } from './dashboard/perfil/perfil.component';
 import { RegisterComponent } from './registro/registro.component';
+import { CuestionarioComponent } from './Cuestionario/cuestionario/cuestionario.component';
+import { SeleccionComponent } from './Cuestionario/seleccion/seleccion.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'seleccion',
     pathMatch: 'full'
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
-    path: 'register',
+    path: 'registro',
     component: RegisterComponent
-  },{
+  },
+  { path: 'cuestionario', 
+    component: CuestionarioComponent 
+  },
+  {
+    path: 'seleccion', component: SeleccionComponent
+  },
+  {
     path: 'dashboard',
     component: DashboardComponent,
     children: [

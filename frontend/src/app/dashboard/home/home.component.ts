@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { AuthService } from '../../auth.service';
 import { DatePipe, NgClass } from '@angular/common';
+import { HomeService } from './home.service';
 
 export type Notificaciones = {
   id: number,
@@ -19,6 +20,18 @@ export type Ejercicios = {
   descripcion: string,  
   estado: boolean
 }
+
+export type Clientes = {
+  id: number,
+  nombre: string,
+  apellidos: string,
+  email: string,
+  perfil: number,
+  proposito: string,
+  entrenador: string,
+}
+
+
 @Component({
   selector: 'app-home',
   imports: [NgClass, DatePipe],
@@ -26,6 +39,13 @@ export type Ejercicios = {
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+
+  perfil = localStorage.getItem('perfil');
+  entrenador = Number(localStorage.getItem('id'));;
+  nombreUsuario = localStorage.getItem('nombre');
+
+  clientes: Clientes[] = [];
+
 
   //Variables calendario
   notificaciones: Notificaciones[] = [];
@@ -39,17 +59,22 @@ export class HomeComponent implements OnInit {
     "Abril", "Mayo", "Junio",
     "Julio", "Agosto", "Septiembre",
     "Octubre", "Noviembre", "Diciembre"
-  ]
+  ];
   diasSemana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
   nombreMes = this.meses[this.mes - 1]
   dias: { fecha?: Date}[] = [];
 
 
-  nombreUsuario = localStorage.getItem('nombre');
+  
 
   private auth = inject(AuthService);
+  private service = inject(HomeService);
 
   ngOnInit(): void {
+    this.service.getClientes(this.entrenador!).subscribe( (data) => {
+      this.clientes = data;
+    });
+
     this.auth.getLoggedUser(); //Obtiene el nombre del usuario logueado
 
     this.hoy = new Date().toISOString().substring(0, 10);
@@ -114,6 +139,8 @@ export class HomeComponent implements OnInit {
     }
     return this.day === fecha.getDate() && this.mes === fecha.getMonth() + 1;
   }
-  //Codigo calendario
+  //Codigo entrenador 
+  diasEntrenador(idCliente: number) {
+  }
 
 }
