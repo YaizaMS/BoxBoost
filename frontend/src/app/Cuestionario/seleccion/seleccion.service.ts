@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +6,11 @@ import { Injectable } from '@angular/core';
 })
 export class SeleccionService {
 
-  constructor() { }
+  private api = 'http://localhost:3000/api';
+  
+  constructor(private http: HttpClient) {}
+
+  comportamiento(codigo: string) {
+    return this.http.get<string>(`${this.api}/seleccion/${codigo}`);
+  }
 }

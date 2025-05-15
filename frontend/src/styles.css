@@ -4,11 +4,15 @@
 
 
 h1{
-    @apply text-4xl;
+    @apply text-4xl font-exo;
+}
+
+span{
+    @apply font-exo text-xl;
 }
 
 .btn{
-    @apply bg-secondary p-2.5 text-center rounded-full cursor-pointer transition-all duration-300 ease-in-out;
+    @apply bg-secondary p-2.5 text-center rounded-full cursor-pointer transition-all duration-300 ease-in-out font-exo;
    
     &:hover{
         @apply bg-secondary-hover;
@@ -47,3 +51,5 @@ h1{
 
   
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Exo 2, Monserrat, sans-serif; }

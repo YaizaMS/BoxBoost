@@ -36,6 +36,7 @@ export class LoginComponent {
     if (this.camposVacios()) {
       this.auth.login(this.usuario).subscribe({
         next: (res) => {
+          console.log(res);
           this.router.navigate(['/dashboard/home']);
         },
         error: (err) => {

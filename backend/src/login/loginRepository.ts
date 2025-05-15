@@ -7,6 +7,7 @@ const SECRET_KEY = '-1$5/iW@b&u#p_r7%f?@r_n*o0j';
 export async function login(usuario: { user: string, pass: string }) {
     const conn = await conexion.getConnection();
     try {
+      console.log(usuario);
          const [rows]: any = await conn.execute(
             `select * 
             from usuarios U 

@@ -26,6 +26,31 @@ export class SeleccionComponent {
       codigo += caracteres[randomIndex];
     }
     console.log(codigo);
+    /*this.service.comprobarCodigo(codigo).subscribe({
+      next: (res) => {
+        if (res.ok) {
+          Swal.fire({
+            title: "¡Se ha generado tu codigo!",
+            icon: "success",
+            text: "Con el puedes invitar a tu gente y poder asignarles ejercicios",
+            draggable: true
+          });
+          this.router.navigate(['/home']);
+        } else {
+          return this.crearGrupo();
+        }
+      },
+      error: (err) => {
+        Swal.fire({
+          title: "Error al generar el codigo",
+          icon: "error",
+          text: "Hubo un problema al generar el codigo. Inténtalo de nuevo.",
+          draggable: true
+        });
+        console.error('Error:', err);
+      
+    }
+    );}*/
 
     return codigo;
   }

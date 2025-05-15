@@ -5,38 +5,66 @@
 
   <div class="m-4 flex flex-col gap-6">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="bg-secondary rounded-lg p-4 space-y-2">
-        @for (n of usuarios; track $index) {
-          <div>
-            <p><strong class="text-primary font-exo text-2xl">Nombre: </strong>
-            <span class="font-exo text-xl">{{ n.nombre }} {{ n.apellidos }}</span></p>
+      <div class="flex bg-secondary rounded-lg p-4 items-center">
+        @for (n of usuario; track $index) {
+        <div>
+          <p><strong class="text-primary font-exo text-2xl">Nombre: </strong>
+            <span class="font-exo text-xl">{{ n.nombre }} {{ n.apellidos }}</span>
+          </p>
 
-            <p><strong class="text-primary font-exo text-2xl">Email: </strong>
-            <span class="font-exo text-xl">{{ n.email }}</span></p>
+          <p><strong class="text-primary font-exo text-2xl">Email: </strong>
+            <span class="font-exo text-xl">{{ n.email }}</span>
+          </p>
 
-            <p><strong class="text-primary font-exo text-2xl">Fecha de nacimiento: </strong>
-            <span class="font-exo text-xl">{{ n.edad | date: 'dd/MM/yyyy' }}</span></p>
-          </div>
+          <p><strong class="text-primary font-exo text-2xl">Fecha de nacimiento: </strong>
+            <span class="font-exo text-xl">{{ n.edad | date: 'dd/MM/yyyy' }}</span>
+          </p>
+        </div>
         }
       </div>
 
+      @if (perfil === "1") {
+      <div class="bg-secondary rounded-lg p-6 space-y-4 shadow">
+        <strong class="text-primary font-exo text-2xl block mb-2">Personas a cargo:</strong>
+        <div class="flex flex-wrap gap-4">
+          @for (u of usuarios; track $index) {
+          <div class="flex w-full md:w-fit items-center gap-3 bg-white rounded-xl px-4 py-2 shadow-sm hover:shadow transition">
+            <!-- Avatar con iniciales -->
+            <div
+              class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg font-exo uppercase">
+              {{ (u.nombre[0] || '') + (u.apellidos[0] || '') }}
+            </div>
+            <span class="text-primary font-exo text-lg">{{u.nombre}} {{u.apellidos}}</span> 
+              <button class="ml-2 text-danger hover:text-danger/50 transition">
+              <i class="fa-solid fa-circle-xmark text-xl"></i>
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+
+      }@else{
       <div class="bg-secondary rounded-lg p-4 space-y-2">
         <p><strong class="text-primary font-exo text-2xl">Perfil: </strong>
-        <span class="font-exo text-xl"></span></p>
+          <span class="font-exo text-xl"></span>
+        </p>
 
         <p><strong class="text-primary font-exo text-2xl">Propósito: </strong>
-        <span class="font-exo text-xl"></span></p>
+          <span class="font-exo text-xl"></span>
+        </p>
 
         <p><strong class="text-primary font-exo text-2xl">Días de entrenamiento: </strong>
-        <span class="font-exo text-xl"></span></p>
+          <span class="font-exo text-xl"></span>
+        </p>
       </div>
+      }
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid grid-cols-2 gap-4">
       <div class="flex justify-center md:justify-end">
         <button class="btn btn-primary" (click)="cerrarSesion()">Cerrar sesión</button>
       </div>
-      <div class="flex justify-center md:justify-start">
+      <div [ngClass]="this.perfil == '2' ? 'hidden' : ''" class="flex justify-center md:justify-start">
         <button class="btn btn-outline-danger" (click)="eliminarCuenta()">Eliminar cuenta</button>
       </div>
     </div>

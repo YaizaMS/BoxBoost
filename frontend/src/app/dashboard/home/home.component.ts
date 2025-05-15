@@ -34,7 +34,7 @@ export type Clientes = {
 
 @Component({
   selector: 'app-home',
-  imports: [NgClass, DatePipe],
+  imports: [NgClass, DatePipe, ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

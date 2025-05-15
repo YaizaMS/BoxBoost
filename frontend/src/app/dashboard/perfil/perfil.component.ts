@@ -11,9 +11,18 @@ export type Usuario = {
   apellidos: string,
   edad: number,
   email: string,
-  // proposito: string,
-  // perfil: string,
-  // entrenador: string
+  proposito: string,
+  perfil: string,
+  entrenador: string
+};
+
+export type Usuarios = {
+  id: number,
+  nombre: string,
+  apellidos: string,
+  edad: number,
+  email: string,
+  proposito: string,
 };
 
 @Component({
@@ -25,8 +34,10 @@ export type Usuario = {
 })
 export class PerfilComponent implements OnInit {
 
-  usuarios: Usuario[] = [];
+  usuario: Usuario[] = [];
+  usuarios: Usuarios[] = [];
   id = localStorage.getItem('id');
+  perfil = localStorage.getItem('perfil');
 
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -34,16 +45,30 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getPerfil(this.id!).subscribe(data => {
-      this.usuarios = [data];
+      this.usuario = data;
     });
+
+    this.getUsuarios();
   }
+
+  //Aqui llamamos a los usuarios que el entrenador tiene a cargo 
+  getUsuarios(){
+  this.service.getUsuarios(this.id!).subscribe(data => {
+    this.usuarios = data;
+    console.log(this.usuarios);
+  });
+}
+
 
   cerrarSesion() {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+  
 
   eliminarCuenta() {
+    //Deberia de haber una comprobacion de que si todavia tiene gente a cargo no pueda eliminar la cuenta, 
+    // ademas de ponerle un mensaje de aviso --> "Tienes personas a cargo, no puedes eliminar la cuenta"
     Swal.fire({
       title: "¿Estás seguro?",
       icon: "warning",

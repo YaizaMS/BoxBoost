@@ -1,5 +1,5 @@
 import { NextFunction, Router, Request, Response} from 'express';
-import { registro, validacionUser } from './registroRepository';
+import { registro } from './registroRepository';
 
 
 // Request y Response añadir manualmente
@@ -18,7 +18,7 @@ registroRouter.post(
         }
 });
 
-registroRouter.get(
+/*registroRouter.get(
     '/:user',
     async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -30,7 +30,7 @@ registroRouter.get(
             res.status(500).json({ error: 'Error al validar el usuario' });
         }
     }
-)
+)*/
 
 
 export default registroRouter;
