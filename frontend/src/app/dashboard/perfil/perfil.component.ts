@@ -11,9 +11,11 @@ export type Usuario = {
   apellidos: string,
   edad: number,
   email: string,
-  proposito: string,
+  objetivo: string,
   perfil: string,
-  entrenador: string
+  nombre_entrenador: string,
+  apellidos_entrenador: string[],
+  disponibilidad: string,
 };
 
 export type Usuarios = {
@@ -22,7 +24,7 @@ export type Usuarios = {
   apellidos: string,
   edad: number,
   email: string,
-  proposito: string,
+  objetivo: string,
 };
 
 @Component({
@@ -44,18 +46,23 @@ export class PerfilComponent implements OnInit {
   private service = inject(PerfilService);
 
   ngOnInit(): void {
-    this.service.getPerfil(this.id!).subscribe(data => {
+    if(this.perfil === '1'){
+      this.service.getPerfilEntrenador(this.id!).subscribe(data => {
+            this.usuario = data;
+          });
+      this.getUsuarios();
+    }else{
+    this.service.getPerfilCliente(this.id!).subscribe(data => {
       this.usuario = data;
     });
+  }
 
-    this.getUsuarios();
   }
 
   //Aqui llamamos a los usuarios que el entrenador tiene a cargo 
   getUsuarios(){
   this.service.getUsuarios(this.id!).subscribe(data => {
     this.usuarios = data;
-    console.log(this.usuarios);
   });
 }
 

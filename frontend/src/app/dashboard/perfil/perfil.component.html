@@ -22,20 +22,21 @@
         </div>
         }
       </div>
-
+      @for (n of usuario; track $index) {
       @if (perfil === "1") {
       <div class="bg-secondary rounded-lg p-6 space-y-4 shadow">
         <strong class="text-primary font-exo text-2xl block mb-2">Personas a cargo:</strong>
         <div class="flex flex-wrap gap-4">
           @for (u of usuarios; track $index) {
-          <div class="flex w-full md:w-fit items-center gap-3 bg-white rounded-xl px-4 py-2 shadow-sm hover:shadow transition">
+          <div
+            class="flex w-full md:w-fit items-center gap-3 bg-white rounded-xl px-4 py-2 shadow-sm hover:shadow transition">
             <!-- Avatar con iniciales -->
             <div
               class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg font-exo uppercase">
               {{ (u.nombre[0] || '') + (u.apellidos[0] || '') }}
             </div>
-            <span class="text-primary font-exo text-lg">{{u.nombre}} {{u.apellidos}}</span> 
-              <button class="ml-2 text-danger hover:text-danger/50 transition">
+            <span class="text-primary font-exo text-lg">{{u.nombre}} {{u.apellidos}}</span>
+            <button class="ml-2 text-danger hover:text-danger/50 transition">
               <i class="fa-solid fa-circle-xmark text-xl"></i>
             </button>
           </div>
@@ -45,18 +46,32 @@
 
       }@else{
       <div class="bg-secondary rounded-lg p-4 space-y-2">
-        <p><strong class="text-primary font-exo text-2xl">Perfil: </strong>
-          <span class="font-exo text-xl"></span>
+        <p><strong class="text-primary font-exo text-2xl">Entrenador: </strong>
+          <span class="font-exo text-xl">{{n.nombre_entrenador}} {{n.apellidos_entrenador}}</span>
         </p>
 
-        <p><strong class="text-primary font-exo text-2xl">Propósito: </strong>
-          <span class="font-exo text-xl"></span>
+        <p><strong class="text-primary font-exo text-2xl">Objetivo: </strong>
+          <span class="font-exo text-xl">{{n.objetivo}}</span>
         </p>
 
-        <p><strong class="text-primary font-exo text-2xl">Días de entrenamiento: </strong>
-          <span class="font-exo text-xl"></span>
-        </p>
+       <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2 flex-wrap">
+  <strong class="text-primary font-exo text-2xl mb-2 sm:mb-0 sm:mr-2">Disponibilidad:</strong>
+  <div class="flex gap-2 flex-wrap">
+    @for (dia of ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']; track $index) {
+      <span class="w-10 h-10 rounded-full flex items-center justify-center text-lg font-exo font-bold uppercase border-2 shadow-sm transition"
+        [ngClass]="{
+          'bg-primary text-white border-primary': n.disponibilidad.includes(dia),
+          'bg-white text-primary border-primary/50': !n.disponibilidad.includes(dia)
+        }">
+        {{ dia[0] }}
+      </span>
+    }
+  </div>
+</div>
+
+
       </div>
+      }
       }
     </div>
 

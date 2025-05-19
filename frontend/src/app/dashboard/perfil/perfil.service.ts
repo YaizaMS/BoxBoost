@@ -11,7 +11,9 @@ export class PerfilService {
   
   constructor(private http: HttpClient) {}
 
-  getPerfil(id: string) {return this.http.get<Usuario[]>(`${this.api}/perfil/${id}`)};
+  getPerfilEntrenador(id: string) {return this.http.get<Usuario[]>(`${this.api}/perfil/entrenador/${id}`)};
+  getPerfilCliente(id: string) {return this.http.get<Usuario[]>(`${this.api}/perfil/cliente/${id}`)};
+
 
   getUsuarios(id: string) {return this.http.get<Usuarios[]>(`${this.api}/perfil/usuarios/${id}`)}
 }
