@@ -26,7 +26,7 @@ export class LoginComponent {
 
   camposVacios(): boolean {
     if (this.usuario.user.trim() === '' || this.usuario.pass.trim() === '') {
-      Swal.fire({ title: "Error de inicio de sesión", icon: "error", text: "El usuario o la contraseña no puede estar vacío", draggable: true });
+      Swal.fire({ title: "Error de inicio de sesión", icon: "error", text: "El usuario o la contraseña no puede estar vacío"});
       return false;
     }
     return true;
@@ -36,7 +36,6 @@ export class LoginComponent {
     if (this.camposVacios()) {
       this.auth.login(this.usuario).subscribe({
         next: (res) => {
-          console.log(res);
           this.router.navigate(['/dashboard/home']);
         },
         error: (err) => {
@@ -44,7 +43,6 @@ export class LoginComponent {
             title: "Error de inicio de sesión",
             icon: "error",
             text: "Hubo un problema al iniciar sesión. Inténtalo de nuevo.",
-            draggable: true
           });
           console.error('Error:', err);
         }

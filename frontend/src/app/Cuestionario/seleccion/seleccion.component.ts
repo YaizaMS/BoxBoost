@@ -25,7 +25,6 @@ export class SeleccionComponent {
       const randomIndex = Math.floor(Math.random() * caracteres.length);
       codigo += caracteres[randomIndex];
     }
-    console.log(codigo);
     /*this.service.comprobarCodigo(codigo).subscribe({
       next: (res) => {
         if (res.ok) {

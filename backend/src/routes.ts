@@ -8,6 +8,7 @@ import seleccionRouter from './seleccion/seleccionController';
 const router = Router();
 
 //Crear esta linea por cada Controller
+
 router.use( '/registro', registroRouter ) 
 
 router.use('/login', loginRouter )

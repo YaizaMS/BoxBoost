@@ -12,9 +12,6 @@ import { NgClass } from '@angular/common';
 })
 export class NavbarComponent {
 
-
-
-  private authService = inject(AuthService);
   private router = inject(Router);
   
   navegar(ruta: string) {
