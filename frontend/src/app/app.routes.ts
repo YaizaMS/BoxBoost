@@ -8,6 +8,8 @@ import { PerfilComponent } from './dashboard/perfil/perfil.component';
 import { RegisterComponent } from './registro/registro.component';
 import { CuestionarioComponent } from './Cuestionario/cuestionario/cuestionario.component';
 import { SeleccionComponent } from './Cuestionario/seleccion/seleccion.component';
+import { EjerciciosComponent } from './dashboard/ejercicios/ejercicios.component';
+import { InformacionComponent } from './dashboard/informacion/informacion.component';
 
 export const routes: Routes = [
   {
@@ -35,7 +37,9 @@ export const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'chat', component: ChatComponent },
-      { path: 'perfil', component: PerfilComponent }
+      { path: 'perfil', component: PerfilComponent },
+      { path: 'ejercicios', component: EjerciciosComponent },
+      { path: 'informacion', component: InformacionComponent }
     ]
   }
 ];
