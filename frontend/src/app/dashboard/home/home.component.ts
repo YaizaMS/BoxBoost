@@ -25,10 +25,15 @@ export type Clientes = {
   id: number,
   nombre: string,
   apellidos: string,
-  email: string,
-  perfil: number,
-  proposito: string,
-  entrenador: string,
+  edad: number,
+  objetivo: string,
+  nivel_fitness: string,
+  disponibilidad: string,
+  frecuencia: number,
+  observaciones: string,
+  genero: string,
+  material: string,
+  dia: string
 }
 
 
@@ -52,6 +57,7 @@ export class HomeComponent implements OnInit {
   ejercicios: Ejercicios[] = [];
   hoy = '';
   year = 0;
+  fecha = new Date();
   day = new Date().getDate();
   mes = new Date().getMonth() + 1;
   meses = [
@@ -60,10 +66,11 @@ export class HomeComponent implements OnInit {
     "Julio", "Agosto", "Septiembre",
     "Octubre", "Noviembre", "Diciembre"
   ];
-  diasSemana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
+  diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
   nombreMes = this.meses[this.mes - 1]
   dias: { fecha?: Date}[] = [];
-
+  
+  diaSemana= this.diasSemana[this.fecha.getDay()-1]; // Saca el nombre del dia de la semana
 
   
 
@@ -71,11 +78,16 @@ export class HomeComponent implements OnInit {
   private service = inject(HomeService);
 
   ngOnInit(): void {
+    console.log(this.diaSemana);
     this.service.getClientes(this.entrenador!).subscribe( (data) => {
       this.clientes = data;
+      console.log(this.clientes);
     });
 
     this.auth.getLoggedUser(); //Obtiene el nombre del usuario logueado
+
+    const indiceHoy = new Date().getDay();
+    this.hoy = this.diasSemana[(indiceHoy + 6 ) % 7];
 
     this.hoy = new Date().toISOString().substring(0, 10);
     this.year = +this.hoy.substring(0, 4);
@@ -140,7 +152,6 @@ export class HomeComponent implements OnInit {
     return this.day === fecha.getDate() && this.mes === fecha.getMonth() + 1;
   }
   //Codigo entrenador 
-  diasEntrenador(idCliente: number) {
-  }
+
 
 }

@@ -97,39 +97,43 @@
         <h1 class="text-white text-3xl font-exo p-4">Bienvenido/a {{ nombreUsuario }}</h1>
     </div>
     @if (clientes.length > 0) {
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-2">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-2">
         @for (c of clientes; track $index) {
         <div class="rounded-xl shadow bg-gray-200 flex flex-col min-h-[220px]">
             <header class="bg-primary rounded-t-lg items-center justify-center p-4">
                 <span class="text-white text-2xl"> {{c.nombre}} {{c.apellidos}}</span>
             </header>
-            <div class="flex-1 flex flex-col justify-between bg-gray-200 rounded-b-xl p-4">
+            <div class="flex px-4 py-2 items-center justify-between">
+                <span>
+                    {{c.objetivo}}
+                </span>
+            </div>
+            <div class="flex flex-col justify-between rounded-b-xl px-4">
                 <!-- Dias de entreno personal (me refiero a cada usuario) -->
                 <div class="flex gap-2 mb-3">
                     @for(dia of diasSemana; track $index) {
-                    <span class="w-full flex items-center justify-center border-2 border-primary rounded-full font-bold">
+                    <span class="w-full flex items-center justify-center border-2 border-primary rounded-full font-bold"
+                     [ngClass]="{
+                        'bg-primary text-white': c.disponibilidad.includes(dia),
+                        'bg-white text-primary': !c.disponibilidad.includes(dia)
+                        }">
                         {{dia.charAt(0)}}
                     </span>
                         }
-                        <!-- [ngClass]="{
-                      'bg-primary text-white': c.diasEntrenamiento?.includes(dia),
-                      'text-primary': !c.diasEntrenamiento?.includes(dia)
-                    } -->
                 </div>
-
                 <!-- Mensaje de aviso -->
-                <div class="mt-2 min-h-[32px]">
+                <div class="p-2 rounded font-exo text-center">
+                    @if (c.disponibilidad.includes(diaSemana)) {
+                    <strong class="text-primary/70 font-exo text-2xl">Tienes que añador ejercicios😊</strong>
+                    }@else {
+                        <strong class="text-black/20 font-exo text-2xl">¡No tienes ejercicios para hoy!</strong>
+                    }
                     </div>
+
             </div>
 
         </div>
         }
-        <!-- @for (_ of [].constructor(Math.max(0,3 - clientes.length)); track $index) {
-            <div class="rounded-xl border-2 border-dashed border-gray-400 bg-gray-100 flex flex-col items-center justify-center min-h-[220px]">
-        <span class="text-gray-400 text-lg font-exo mb-2 text-center">Añade aquí a más gente</span>
-        <span class="text-gray-400 text-4xl">+</span>
-      </div>
-        } -->
     </div>
         }@else {
         <div class="flex flex-col w-full h-full gap-2 mt-10 items-center justify-center">
