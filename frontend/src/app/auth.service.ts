@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import  { tap } from 'rxjs/operators';
-import {jwtDecode} from 'jwt-decode';
+import { BehaviorSubject, tap } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 interface TokenPayload {
   id: number;
@@ -20,7 +20,10 @@ interface TokenPayload {
 })
 export class AuthService {
 
-  private api = 'http://localhost:3000/api'; 
+  private api = 'http://localhost:3000/api';
+
+  private userIdSubject = new BehaviorSubject<number | null>(this.getUserIdFromStorage());
+  userId$ = this.userIdSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -28,17 +31,32 @@ export class AuthService {
     return this.http.post<{ token: string }>(`${this.api}/login/`, usuario).pipe(
       tap((res) => {
         localStorage.setItem('token', res.token);
+        this.decodeAndStoreToken(res.token);
       })
     );
   }
 
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('id');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('nombre');
-    localStorage.removeItem('perfil');
+  private decodeAndStoreToken(token: string) {
+    const decoded = jwtDecode<TokenPayload>(token);
+    const { id, nombre, perfil } = decoded;
 
+    localStorage.setItem('id', id.toString());
+    localStorage.setItem('nombre', nombre);
+    localStorage.setItem('perfil', perfil.toString());
+
+    this.userIdSubject.next(id); 
+  }
+
+  getLoggedUser() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.decodeAndStoreToken(token);
+    }
+  }
+
+  logout() {
+    localStorage.clear();
+    this.userIdSubject.next(null);
   }
 
   getToken(): string | null {
@@ -49,20 +67,12 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  getLoggedUser() {
-    const token = localStorage.getItem('token');
+  getUserIdFromStorage(): number | null {
+    const id = localStorage.getItem('id');
+    return id ? Number(id) : null;
+  }
 
-    if (token) {
-      const decoded = jwtDecode<TokenPayload>(token);
-      const id = decoded.id;
-      const nombre = decoded.nombre;
-      const perfil = decoded.perfil;
-      localStorage.setItem('id', id.toString());
-      localStorage.setItem('nombre', nombre);
-      localStorage.setItem('perfil', perfil.toString());
-
-
-    }
-    
+  getCurrentUserId(): number | null {
+    return this.userIdSubject.value;
   }
 }
