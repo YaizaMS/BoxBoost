@@ -22,12 +22,12 @@ export async function registro(
 
     if (usuariosEncontrados.length > 0) throw new Error('El usuario ya existe');
 
-    const perfil = 2;
+
     // Inserta el usuario en la tabla de dardosUser
     const [sql2] = await conn.execute(
-      `INSERT INTO datosUser (nombre, apellidos, edad, email, perfil) VALUES (?,?,?,?,?)`,
+      `INSERT INTO datosUser (nombre, apellidos, edad, email) VALUES (?,?,?,?,)`,
 
-      [registro.nombre, registro.apellidos, registro.edad, registro.email, perfil]
+      [registro.nombre, registro.apellidos, registro.edad, registro.email]
     );
 
     const userId = (sql2 as any).insertId;
@@ -99,11 +99,16 @@ export async function postCuestionario(
 
   // Si no existe, inserta la relación
   if (!existeRelacion || existeRelacion.length === 0) {
-    await conexion.query(
+    await conexion.query( 
       'INSERT INTO entrenadorClientes (id_entrenador, id_cliente) VALUES (?, ?)',
       [idEntrenador, userId]
     );
   }
+
+    await conexion.query(
+    'UPDATE datosUser SET perfil = ? WHERE id = ?',
+    [2, userId]
+  );
   // Guarda la informacion del usuario en la tabla de cuestionarios
   const sql = `
     INSERT INTO cuestionarios (

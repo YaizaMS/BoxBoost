@@ -10,7 +10,7 @@ export class SeleccionService {
   
   constructor(private http: HttpClient) {}
 
-  comportamiento(codigo: string) {
-    return this.http.get<string>(`${this.api}/seleccion/${codigo}`);
+  guardarCodigo(codigo: string, userId: string) {
+    return this.http.get(`${this.api}/seleccion/${codigo}/${userId}`);
   }
 }

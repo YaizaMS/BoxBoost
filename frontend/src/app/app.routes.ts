@@ -14,7 +14,7 @@ import { InformacionComponent } from './dashboard/informacion/informacion.compon
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'seleccion',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
