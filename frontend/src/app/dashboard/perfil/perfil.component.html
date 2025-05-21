@@ -1,6 +1,6 @@
 <div>
-  <div class="bg-primary p-4 sm:items-center">
-    <h1 class="text-white text-3xl font-exo p-4">PERFIL</h1>
+  <div class="bg-primary p-4 sm:items-center border-x-2 rounded-b-lg">
+    <h1 class="text-white text-3xl font-exo p-4">Perfil</h1>
   </div>
 
   <div class="m-4 flex flex-col gap-6">
@@ -19,6 +19,17 @@
           <p><strong class="text-primary font-exo text-2xl">Fecha de nacimiento: </strong>
             <span class="font-exo text-xl">{{ n.edad | date: 'dd/MM/yyyy' }}</span>
           </p>
+          <p><strong class="text-primary font-exo text-2xl">Codigo: </strong>
+            <span class="font-exo text-xl">{{ n.codigo }} </span>
+            <span (click)="copiar(n.codigo)" class="cursor-pointer hover:text-primary"><i
+                class="fa-solid fa-copy"></i></span>
+            @if (copiado === n.codigo) {
+            <span
+              class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs bg-gray-800 text-white px-2 py-1 rounded shadow z-10">
+              Copiado ✔
+            </span>
+            }
+          </p>
         </div>
         }
       </div>
@@ -27,6 +38,7 @@
       <div class="bg-secondary rounded-lg p-6 space-y-4 shadow">
         <strong class="text-primary font-exo text-2xl block mb-2">Personas a cargo:</strong>
         <div class="flex flex-wrap gap-4">
+          @if (usuarios.length > 0) {
           @for (u of usuarios; track $index) {
           <div
             class="flex w-full md:w-fit items-center gap-3 bg-white rounded-xl px-4 py-2 shadow-sm hover:shadow transition">
@@ -41,6 +53,12 @@
             </button>
           </div>
           }
+          }@else {
+          <div class="flex flex-col w-full h-full gap-2 items-center justify-center">
+            <strong class="text-black/60 font-exo text-2xl">Todavia tienes personas a cargo🥺</strong>
+          </div>
+          }
+
         </div>
       </div>
 
@@ -54,20 +72,21 @@
           <span class="font-exo text-xl">{{n.objetivo}}</span>
         </p>
 
-       <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2 flex-wrap">
-  <strong class="text-primary font-exo text-2xl mb-2 sm:mb-0 sm:mr-2">Disponibilidad:</strong>
-  <div class="flex gap-2 flex-wrap">
-    @for (dia of ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']; track $index) {
-      <span class="w-10 h-10 rounded-full flex items-center justify-center text-lg font-exo font-bold uppercase border-2 shadow-sm transition"
-        [ngClass]="{
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2 flex-wrap">
+          <strong class="text-primary font-exo text-2xl mb-2 sm:mb-0 sm:mr-2">Disponibilidad:</strong>
+          <div class="flex gap-2 flex-wrap">
+            @for (dia of ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']; track $index) {
+            <span
+              class="w-10 h-10 rounded-full flex items-center justify-center text-lg font-exo font-bold uppercase border-2 shadow-sm transition"
+              [ngClass]="{
           'bg-primary text-white border-primary': n.disponibilidad.includes(dia),
           'bg-white text-primary border-primary/50': !n.disponibilidad.includes(dia)
         }">
-        {{ dia[0] }}
-      </span>
-    }
-  </div>
-</div>
+              {{ dia[0] }}
+            </span>
+            }
+          </div>
+        </div>
 
 
       </div>
@@ -75,13 +94,16 @@
       }
     </div>
 
-    <div class="grid grid-cols-2 gap-4">
-      <div class="flex justify-center md:justify-end">
+    <div class="flex flex-row justify-center gap-4">
+
+      <div class="flex justify-center">
         <button class="btn btn-primary" (click)="cerrarSesion()">Cerrar sesión</button>
       </div>
-      <div [ngClass]="this.perfil == '2' ? 'hidden' : ''" class="flex justify-center md:justify-start">
+
+      <div [ngClass]="this.perfil == '2' ? 'hidden' : '' " class="flex justify-center">
         <button class="btn btn-outline-danger" (click)="eliminarCuenta()">Eliminar cuenta</button>
       </div>
+
     </div>
   </div>
 </div>
