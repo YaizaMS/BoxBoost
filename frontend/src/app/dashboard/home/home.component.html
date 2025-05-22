@@ -93,7 +93,7 @@
 </div>
 }@else {
 <div>
-    <div class="bg-primary p-4 sm:items-center">
+    <div class="bg-primary p-4 sm:items-center border-x-2 rounded-b-lg">
         <h1 class="text-white text-3xl font-exo p-4">Bienvenido/a {{ nombreUsuario }}</h1>
     </div>
     @if (clientes.length > 0) {
@@ -124,21 +124,19 @@
                 <!-- Mensaje de aviso -->
                 <div class="p-2 rounded font-exo text-center">
                     @if (c.disponibilidad.includes(diaSemana)) {
-                    <strong class="text-primary/70 font-exo text-2xl">Tienes que añador ejercicios😊</strong>
+                    <strong class="text-primary/70 font-exo text-2xl">Tienes que añadir ejercicios😊</strong>
                     }@else {
-                        <strong class="text-black/20 font-exo text-2xl">¡No tienes ejercicios para hoy!</strong>
+                        <strong class="text-black/20 font-exo text-2xl">¡Hoy tiene descanso!</strong>
                     }
                     </div>
-
             </div>
-
         </div>
         }
     </div>
         }@else {
         <div class="flex flex-col w-full h-full gap-2 mt-10 items-center justify-center">
             <h1>¡Todavia no tienes clientes asociados!</h1>
-            <h2>Pasa les tu codigo para poder asignar ejercicios</h2>
+            <h2 class="text-2xl">Pasa les tu codigo para poder asignar ejercicios</h2>
             <img src="../../assets/image/Logo.png" alt="Logo" class="w-52 p-2">
         </div>
         }

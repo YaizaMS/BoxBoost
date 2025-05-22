@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     <div class="my-2 ">
       <label class="font-exo" [for]="id">{{label}}</label>
       <br>
-      <input class="bg-secondary text-primary rounded-full p-1 pl-2 w-full"
+      <input class="bg-secondary text-primary rounded-full p-1 pl-2 w-full focus:border-primary"
         [id]="id"
         [type]="type"
         [placeholder]="placeholder"

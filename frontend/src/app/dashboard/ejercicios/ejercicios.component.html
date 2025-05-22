@@ -1,1 +1,211 @@
-<p>ejercicios works!</p>
+<div class="bg-primary p-6 border-x-2 rounded-b-2xl shadow flex flex-col md:flex-row gap-6">
+
+    <div>
+        <div class="flex w-full items-center justify-center md:justify-start mb-4">
+            <h1 class="text-white text-2xl md:text-3xl font-bold tracking-wide">Añadir ejercicios</h1>
+        </div>
+        <div class="flex flex-col sm:flex-row w-full gap-4 items-center justify-center md:justify-start">
+            <input id="fecha"
+                class="w-full text-lg sm:w-56 text-primary font-semibold rounded-lg px-3 py-2 shadow focus:outline-none focus:ring-2 focus:ring-primary h-12"
+                type="date" [(ngModel)]="selectDate" (ngModelChange)="onDateChange($event)" />
+
+            <select [(ngModel)]="clienteSeleccionado"
+                (change)="infoCliente(clienteSeleccionado); getEjerciciosCliente(clienteSeleccionado)"
+                class="w-full sm:w-56 text-primary font-semibold text-lg rounded-lg px-3 py-2 shadow focus:outline-none focus:ring-2 focus:ring-primary h-12"
+                id="cliente">
+                <option value="0" disabled>--Selecciona un cliente</option>
+                @for (c of clientes2; track $index) {
+                <option [value]="c.id">
+                    {{c.nombre}} {{c.apellidos}}
+                </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="w-full rounded-lg flex flex-col gap-6 bg-secondary text-black p-4 shadow-inner">
+        @if (clientes && clientes.length > 0) {
+        @for (c of clientes; track $index) {
+        <div class="flex flex-col md:flex-row md:items-start gap-6 px-4 py-3">
+            <!-- Icono y nombre -->
+            <div class="flex items-center gap-4 min-w-[200px]">
+                <span class="text-3xl">
+                    @if (c.genero === 'Mujer') {
+                    <i class="fa-solid fa-female text-pink-500"></i>
+                    } @else if (c.genero === 'Hombre') {
+                    <i class="fa-solid fa-male text-blue-500"></i>
+                    } @else {
+                    <i class="fa-solid fa-question text-gray-400"></i>
+                    }
+                </span>
+                <div>
+                    <div class="font-bold text-lg md:text-xl">{{c.nombre}} {{c.apellidos}}</div>
+                    <div class="text-xs italic text-black/60">Cliente</div>
+                </div>
+            </div>
+            <!-- Datos -->
+            <div class="flex flex-wrap gap-x-8 gap-y-2 md:ml-8 mt-2 md:mt-0 text-sm md:text-base">
+                <div>
+                    <span class="font-semibold">Fecha nacimiento: </span>
+                    <span>{{c.edad | date:'dd/MM/yyyy'}}</span>
+                </div>
+                <div>
+                    <span class="font-semibold">Objetivo: </span>
+                    <span>{{c.objetivo}}</span>
+                </div>
+                <div>
+                    <span class="font-semibold">Nivel: </span>
+                    <span>{{c.nivel_fitness}}</span>
+                </div>
+                <div>
+                    <span class="font-semibold">Observaciones: </span>
+                    <span>
+                        @if (c.observaciones.length > 0) {
+                        {{c.observaciones}}
+                        } @else {
+                        <span class="italic text-black/40">No hay observaciones</span>
+                        }
+                    </span>
+                </div>
+                <div>
+                    <span class="font-semibold">Material: </span>
+                    <span>{{c.material}}</span>
+                </div>
+            </div>
+        </div>
+        }
+        } @else {
+        <p class="text-center text-black/60 italic">No hay clientes seleccionados</p>
+        }
+    </div>
+
+
+</div>
+
+
+<div class="w-full border-4 border-primary rounded-2xl p-6 mt-4 shadow-xl max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-8 gap-6 items-end">
+        <!-- Selector de ejercicios -->
+        <div class="md:col-span-2">
+            <span class="block mb-2">Ejercicio</span>
+            <select id="ejercicios" name="ejercicios" class=" w-full mt-2 rounded-lg px-4 py-3 text-gray-900 shadow-sm border-4 border-primary"
+                required [(ngModel)]="ejercicioForm.ejercicio_id" aria-placeholder="-- Selecciona un ejercicio">
+                <option value="0" disabled selected>-- Selecciona un ejercicio</option>
+                @for (e of ejercicios; track $index) {
+                <option [value]="e.id">{{ e.nombre }}</option>
+                }
+            </select>
+        </div>
+
+        <!-- Series -->
+        <div>
+            <span class="block mb-2">Series</span>
+            <app-input id="series" name="series" type="number" placeholder="3" min="1" [(value)]="ejercicioForm.series"
+                classCustom="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 shadow-sm transition focus:outline-none focus:ring-4 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary"
+                required></app-input>
+        </div>
+
+        <!-- Repeticiones -->
+        <div>
+            <span class="block mb-2">Repeticiones</span>
+            <app-input id="repeticiones" name="repeticiones" type="number" placeholder="10" min="1" [(value)]="ejercicioForm.repeticiones"
+                classCustom="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 shadow-sm transition focus:outline-none focus:ring-4 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary"
+                required></app-input>
+        </div>
+
+        <!-- Peso -->
+        <div>
+            <span class="block mb-2">Peso(kg)</span>
+            <app-input id="peso" name="peso" type="number" placeholder="20" min="0" [(value)]="ejercicioForm.peso"
+                classCustom="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 shadow-sm transition focus:outline-none focus:ring-4 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary"></app-input>
+        </div>
+
+        <!-- Tiempo -->
+        <div>
+            <span class="block mb-2">Tiempo (seg)</span>
+            <app-input id="tiempo" name="tiempo" type="number" placeholder="60" min="0"  [(value)]="ejercicioForm.tiempo"
+                classCustom="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 shadow-sm transition focus:outline-none focus:ring-4 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary"></app-input>
+        </div>
+
+        <!-- Comentario -->
+        <div>
+            <span class="block mb-2">Comentario</span>
+            <app-input id="comentario" name="comentario" type="text"  [(value)]="ejercicioForm.notas"
+                classCustom="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 shadow-sm transition focus:outline-none focus:ring-4 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary"></app-input>
+        </div>
+
+        <div class="flex justify-center">
+            <button [ngClass]="{'disabled': !clienteSeleccionado}" (click)="guardarEjercicio()" type="submit"
+                class="cursor-pointer w-full md:w-auto bg-success hover:bg-primary-dark text-white font-semibold rounded-lg px-6 py-3 shadow-lg transition-transform transform hover:scale-105 flex items-center justify-center gap-3">
+                <i class="fa-solid fa-plus text-lg"></i> 
+                <span>Añadir</span>
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="flex w-full justify-start pl-6 pt-2">
+    <button class="btn btn-warning" (click)="abrirSelectorEjercicio()">
+        <i class="fa-solid fa-circle-info"></i> Ver informacion de los ejercicios</button>
+</div>
+
+@if(userEjercicios.length > 0) {
+<div class="p-6">
+    <div class="overflow-x-auto rounded-xl shadow-lg bg-white">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+            <thead>
+                <tr class="bg-primary text-white text-2xl *:px-4 *:py-3 *:text-left">
+                    <th class="rounded-tl-xl">Nombre</th>
+                    <th>Series</th>
+                    <th>Reps</th>
+                    <th>Tiempo</th>
+                    <th>Peso</th>
+                    <th>Comentario</th>
+                    <th class="rounded-tr-xl"></th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                @for (e of userEjercicios; track $index) { 
+                <tr class="hover:bg-primary/10 transition text-lg">
+                    <td class="px-4 py-2 font-semibold">{{e.nombre}}</td>
+                    <td class="px-4 py-2">{{e.series}}</td>
+                    <td class="px-4 py-2">{{e.repeticiones}}</td>
+                    <td class="px-4 py-2">{{e.tiempo ?? '--'}} </td>
+                    <td class="px-4 py-2">{{e.peso}} Kg</td>
+                    <td class="px-4 py-2">{{e.notas ?? '--'}}</td>
+                    <td class="px-4 py-2 text-center items-center">
+                        <button class="text-center rounded bg-red-500 hover:bg-red-600 text-white p-2 shadow transition"
+                            (click)="borrarEjercicio(e.id)">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+}@else {
+    <p class="text-center text-black/60 italic">No hay ejercicios registrados</p>
+}
+
+
+@if (mostrarSelector) {
+
+<div class="modal-overlay" (click)="cerrarSelector()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-gray-800">Informacion ejercicios</h2>
+            <button
+                class="rounded-full bg-red-500 hover:bg-red-600 text-white w-8 h-8 flex items-center justify-center shadow"
+                (click)="cerrarSelector()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <app-selector-ejercicios [ejercicios]="ejercicios" (onSelect)="agregarEjercicio($event)">
+        </app-selector-ejercicios>
+    </div>
+</div>
+}

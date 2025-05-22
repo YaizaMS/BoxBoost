@@ -7,6 +7,10 @@ h1{
     @apply text-4xl font-exo;
 }
 
+strong{
+    @apply font-exo text-2xl;
+}
+
 span{
     @apply font-exo text-xl;
 }
@@ -28,10 +32,10 @@ span{
 }
 
 .btn-warning{
-    @apply bg-warning text-white ;
+    @apply bg-warning text-black ;
 
     &:hover{
-        @apply bg-warning-hover;  
+        @apply bg-warning-hover text-white;  
     }
 }
 .btn-danger{
@@ -48,6 +52,18 @@ span{
         @apply bg-danger-hover/20 text-danger;
     }
 }
+.btn-success{
+    @apply bg-success text-white;
+   
+    &:hover{
+        @apply bg-success-hover;  
+    }
+}
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 
   
   

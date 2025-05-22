@@ -1,7 +1,10 @@
 import conexion from '../../conexion';
 
 export async function getUsuarioEntrenador(id: number) {
-    const sql = `select * from datosUser where id = ?;`;
+    const sql = `select * 
+                from datosUser DU
+                LEFT JOIN codigos C ON C.id_entrenador = DU.id
+                where DU.id = ?;`;
 
     const [rows] = await conexion.query(sql, [id]);
     return rows;

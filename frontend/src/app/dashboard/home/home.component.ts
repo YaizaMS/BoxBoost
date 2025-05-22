@@ -78,10 +78,8 @@ export class HomeComponent implements OnInit {
   private service = inject(HomeService);
 
   ngOnInit(): void {
-    console.log(this.diaSemana);
     this.service.getClientes(this.entrenador!).subscribe( (data) => {
       this.clientes = data;
-      console.log(this.clientes);
     });
 
     this.auth.getLoggedUser(); //Obtiene el nombre del usuario logueado

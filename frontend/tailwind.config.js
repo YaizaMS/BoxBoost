@@ -16,6 +16,9 @@ module.exports = {
         'warning-hover': '#e6b300',
         'azul': '#0073B1',
         'gris': '#808080',
+        'success': '#2fb518',
+        'success-hover': '#1f8a0c',
+      },
 
     },
     fontFamily: {
@@ -26,5 +29,4 @@ module.exports = {
   plugins: [
     
   ],
-}
 }
