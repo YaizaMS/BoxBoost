@@ -1,12 +1,12 @@
 import { NextFunction, Router, Request, Response } from 'express';
-import {  eliminarEjercicio, getClientes2, getEjercicios, getEjerciciosCliente, getInfoCliente, guardarEjercicio } from './ejerciciosRepository';
+import { eliminarEjercicio, getClienteEjerciciosCliente, getClientes2, getEjercicios, getEjerciciosCliente, getInfoCliente, guardarEjercicio } from './ejerciciosRepository';
 
 
 const ejerciciosRouter = Router();
 
 ejerciciosRouter.get(
     '/ejercicio',
-    async ( _: Request, res: Response, next: NextFunction) => {
+    async (_: Request, res: Response, next: NextFunction) => {
         try {
             const result = await getEjercicios();
             res.status(200).json(result);
@@ -62,35 +62,48 @@ ejerciciosRouter.get(
 )
 
 ejerciciosRouter.post(
-  '/guardarEjercicio/:user_id/:fecha',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const user_id = req.params.user_id;
-        const fecha = req.params.fecha;
-        const { ejercicio_id, series, repeticiones, peso, tiempo, notas } = req.body;
+    '/guardarEjercicio/:user_id/:fecha',
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const user_id = req.params.user_id;
+            const fecha = req.params.fecha;
+            const { ejercicio_id, series, repeticiones, peso, tiempo, notas } = req.body;
 
-      const result = await guardarEjercicio(+user_id, new Date(fecha), { ejercicio_id, series, repeticiones, peso, tiempo, notas });
+            const result = await guardarEjercicio(+user_id, new Date(fecha), { ejercicio_id, series, repeticiones, peso, tiempo, notas });
 
-      res.status(201).json({ message: 'Ejercicio guardado', result });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: 'Error al guardar el ejercicio' });
+            res.status(201).json({ message: 'Ejercicio guardado', result });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Error al guardar el ejercicio' });
+        }
     }
-  }
 );
 
 ejerciciosRouter.delete(
-  '/eliminarEjercicio/:id',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const id = req.params.id;
-      const result = await eliminarEjercicio(+id);
-      res.status(200).json(result);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: 'Error al eliminar el ejercicio' });
+    '/eliminarEjercicio/:id',
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id = req.params.id;
+            const result = await eliminarEjercicio(+id);
+            res.status(200).json(result);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Error al eliminar el ejercicio' });
+        }
     }
-  }
 )
-
+ejerciciosRouter.get(
+    '/cliente/:idCliente/:fecha',
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const idCliente = req.params.idCliente;
+            const fecha = req.params.fecha;
+            const result = await getClienteEjerciciosCliente(+idCliente, new Date(fecha));
+            res.status(200).json(result);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Error al obtener los ejercicios del cliente' });
+        }
+    }
+)
 export default ejerciciosRouter;

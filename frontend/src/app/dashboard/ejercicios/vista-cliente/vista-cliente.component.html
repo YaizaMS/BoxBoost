@@ -1,0 +1,63 @@
+<div class="bg-primary p-6 border-x-2 rounded-b-2xl shadow flex flex-col md:flex-row gap-6">
+    <div>
+        <div class="flex w-full items-center justify-center md:justify-start mb-4">
+            <h1 class="text-white text-2xl md:text-3xl font-bold tracking-wide">Ejercicios</h1>
+        </div>
+        <div class="flex flex-col sm:flex-row w-full gap-4 items-center justify-center md:justify-start">
+            <input id="fecha"
+                class="w-full text-lg sm:w-56 text-primary font-semibold rounded-lg px-3 py-2 shadow focus:outline-none focus:ring-2 focus:ring-primary h-12"
+                type="date" [(ngModel)]="selectDate" (ngModelChange)="onDateChange($event)" />
+        </div>
+    </div>
+</div>
+@if(clienteEjercicios.length > 0) {
+<div class="p-6">
+    <div class="overflow-x-auto rounded-xl shadow-lg bg-white">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+            <thead>
+                <tr class="bg-primary text-white text-2xl *:px-4 *:py-3 *:text-left">
+                    <th class="rounded-tl-xl">Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Musculo principal</th>
+                    <th>Series</th>
+                    <th>Reps</th>
+                    <th>Tiempo</th>
+                    <th>Peso</th>
+                    <th>Comentario</th>
+                    <th>Video</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                @for (e of clienteEjercicios; track $index) {
+                <tr class="hover:bg-primary/10 transition text-lg">
+                    <td class="px-4 py-2 font-semibold">{{e.nombre}}</td>
+                    <td>{{e.descripcion}}</td>
+                    <td>{{e.musculo_principal}}</td>
+                    <td class="px-4 py-2">{{e.series}}</td>
+                    <td class="px-4 py-2">{{e.repeticiones}}</td>
+                    <td class="px-4 py-2">{{e.tiempo ?? '--'}} </td>
+                    <td class="px-4 py-2">{{e.peso}} Kg</td>
+                    <td class="px-4 py-2">{{e.notas ?? '--'}}</td>
+                    <td>
+                        <a href={{e.video_url}} target="_blank"><i class="fa-solid fa-play-circle-play text-2xl"></i>
+                        </a>
+                    </td>
+
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+}@else {
+    <div class="flex w-full justify-center">
+        <div class="text-center w-fit text-black/60 italic p-4 mt-4 bg-secondary rounded-lg shadow-sm">
+            <span>
+                ¡Hoy es día de descanso! 💪
+                <br />
+                No tienes ejercicios asignados.
+            </span>
+        </div>
+    </div>
+
+}

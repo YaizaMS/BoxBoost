@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Clientes, Select, Ejercicios, UserEjercicio } from './ejercicios.component';
+import { UserEjercicioCliente } from './vista-cliente/vista-cliente.component';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class EjerciciosService {
   
   eliminarEjercicio(id: number) {
     return this.http.delete<UserEjercicio[]>(`${this.api}/ejercicios/eliminarEjercicio/${id}`);
+  }
+
+  getClienteEjerciciosCliente(idCliente: number, fecha: string) {
+    return this.http.get<UserEjercicioCliente[]>(`${this.api}/ejercicios/cliente/${idCliente}/${fecha}`);
   }
 
 }

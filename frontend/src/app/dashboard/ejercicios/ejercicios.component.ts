@@ -4,6 +4,7 @@ import { InputComponent } from "../../../components/input/input";
 import { FormsModule, NgForm } from '@angular/forms';
 import { SelectorEjerciciosComponent } from "./selector-ejercicios/selector-ejercicios.component";
 import { DatePipe, formatDate, NgClass } from '@angular/common';
+import { VistaClienteComponent } from "./vista-cliente/vista-cliente.component";
 
 export type Clientes = {
   id: number,
@@ -28,12 +29,9 @@ export type Select = {
 export type Ejercicios = {
   id: number,
   nombre: string,
-  descripcion: string,
   tipo: string,
-  equipo_necesario: string,
   musculo_pricipal: string,
   dificultad: string,
-  video_url: string
 }
 
 export type UserEjercicio = {
@@ -54,7 +52,7 @@ export type UserEjercicioInput = Omit<UserEjercicio, 'id' | 'nombre'>;
 
 @Component({
   selector: 'app-ejercicios',
-  imports: [FormsModule, SelectorEjerciciosComponent, DatePipe, InputComponent, NgClass],
+  imports: [FormsModule, SelectorEjerciciosComponent, DatePipe, InputComponent, NgClass, VistaClienteComponent],
   templateUrl: './ejercicios.component.html',
   styleUrl: './ejercicios.component.css'
 })
@@ -70,6 +68,7 @@ export class EjerciciosComponent implements OnInit {
   clienteSeleccionado: number = 0;
 
   entrenador = Number(localStorage.getItem('id'));
+  perfil = localStorage.getItem('perfil');
 
   ejercicioForm = {
     ejercicio_id: 0,

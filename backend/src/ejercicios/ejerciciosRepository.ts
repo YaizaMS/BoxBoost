@@ -1,6 +1,8 @@
 import conexion from '../conexion';
 import { format } from 'date-fns';
 
+// Aqui empieza la parte del entrenador
+
 export async function getEjercicios() {
   const sql = `SELECT * from ejercicios;`;
 
@@ -61,14 +63,15 @@ export async function getEjerciciosCliente(idUser: number, fecha: Date) {
 
 };
 
-export async function guardarEjercicio(user_id: number, fecha: Date, 
+export async function guardarEjercicio(user_id: number, fecha: Date,
   ejercicio: { ejercicio_id: number, series: number, repeticiones: number, peso: number, tiempo?: number, notas?: string }) {
+
   const sql = `INSERT INTO userEjercicios (user_id, ejercicio_id, fecha, series, repeticiones, peso, tiempo, notas)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
   const fechaFormateada = format(fecha, 'yyyy-MM-dd');
   await conexion.query(sql,
-    [user_id, ejercicio.ejercicio_id, fechaFormateada, ejercicio.series, 
-      ejercicio.repeticiones, ejercicio.peso, ejercicio.tiempo ?? null, ejercicio.notas ?? null] );
+    [user_id, ejercicio.ejercicio_id, fechaFormateada, ejercicio.series,
+      ejercicio.repeticiones, ejercicio.peso, ejercicio.tiempo ?? null, ejercicio.notas ?? null]);
 }
 
 export async function eliminarEjercicio(id: number) {
@@ -76,3 +79,16 @@ export async function eliminarEjercicio(id: number) {
   await conexion.query(sql, [id]);
 }
 
+// Aqui empieza la parte del cliente
+
+export async function getClienteEjerciciosCliente(idCliente: number, fecha: Date) {
+    const sql = `SELECT UE.user_id, E.nombre, E.descripcion, E.musculo_principal, UE.fecha, UE.series, UE.repeticiones,  UE.peso, UE.tiempo, UE.notas, E.video_url
+                FROM userEjercicios UE 
+                LEFT JOIN ejercicios E ON E.id = UE.ejercicio_id 
+                WHERE UE.user_id = ? AND UE.fecha = ?;`;
+
+    const fechaFormateada = format(fecha, 'yyyy-MM-dd');
+    const [rows] = await conexion.query(sql, [idCliente, fechaFormateada]);
+    return rows;
+
+};
