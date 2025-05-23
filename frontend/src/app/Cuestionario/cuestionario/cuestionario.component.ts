@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SelectComponent } from "../../../components/select/select";
 import Swal from 'sweetalert2';
 import { RegisterService } from '../../registro/registro.service';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-cuestionario',
@@ -39,6 +40,7 @@ export class CuestionarioComponent {
 
   private service = inject(RegisterService);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   toggleDia(dia: string) {
     const index = this.cuestionario.diasSeleccionados.indexOf(dia);
@@ -82,8 +84,10 @@ export class CuestionarioComponent {
     if (camposValidos) {
       this.service.postCuestionario(this.userId!, this.cuestionario).subscribe({
         next: (res) => {
+          localStorage.setItem('perfil', res.token);
+          this.authService.getLoggedUser(); // Vuelve a decodificar el token y guarda el nuevo perfil
           this.router.navigate(['/dashboard/home']);
-        },error: (err) => {
+        }, error: (err) => {
           Swal.fire({
             title: "Error en el registro",
             icon: "error",

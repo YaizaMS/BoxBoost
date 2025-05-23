@@ -36,6 +36,16 @@ export class AuthService {
     );
   }
 
+  updateUserProfile(perfil: number) {
+  localStorage.setItem('perfil', perfil.toString());
+
+  const currentId = this.getCurrentUserId();
+  if (currentId !== null) {
+    this.userIdSubject.next(currentId); 
+  }
+}
+
+
   private decodeAndStoreToken(token: string) {
     const decoded = jwtDecode<TokenPayload>(token);
     const { id, nombre, perfil } = decoded;

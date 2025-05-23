@@ -23,9 +23,8 @@ registroRouter.post(
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const userid = req.params.userid;
-            const result = await postCuestionario(+userid, req.body.cuestionario);
-            console.log(result);
-            res.status(200).json(result);
+            const token = await postCuestionario(+userid, req.body.cuestionario);
+            res.status(200).json(token);
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: 'Error al registrar el usuario' });

@@ -24,6 +24,6 @@ export class RegisterService {
     objetivo: string, nivel: string, frecuencia: number, diasSeleccionados: string[], 
     material: string, observaciones: string}) => {
 
-    return this.http.post(`${this.api}/registro/cuestionario/${userid}`, {cuestionario});
+    return this.http.post<{token:string}>(`${this.api}/registro/cuestionario/${userid}`, {cuestionario});
   }
 }

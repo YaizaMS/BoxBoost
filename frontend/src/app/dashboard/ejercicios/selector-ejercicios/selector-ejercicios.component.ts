@@ -16,7 +16,7 @@ export class SelectorEjerciciosComponent {
   get ejerciciosFiltrados() {
   const f = this.filtro.toLowerCase();
   return this.ejercicios.filter(
-    (e) => e.nombre.toLowerCase().includes(f) || e.musculo_principal.toLowerCase().includes(f)
+    (e) => e.nombre.toLowerCase().includes(f) || e.musculo_principal.toLowerCase().includes(f) || e.dificultad.toLowerCase().includes(f)
   );
 }
 

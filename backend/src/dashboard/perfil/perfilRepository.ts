@@ -53,21 +53,22 @@ export async function eliminarCuenta(id: number) {
         await conn.query('DELETE FROM cuestionarios WHERE user_id = ?', [id]);
         await conn.query('DELETE FROM entrenadorClientes WHERE id_cliente = ?', [id]);
         await conn.query('DELETE FROM entrenadorClientes WHERE id_entrenador = ?', [id]);
+        await conn.query('DELETE FROM codigos WHERE id_entrenador = ?', [id]); 
+
         await conn.query('DELETE FROM datosUser WHERE id = ?', [id]);
 
         await conn.commit();
 
     } catch (err) {
-
         await conn.rollback();
         throw err;
 
     } finally {
-
         conn.release();
-
     }
 }
+
+
 
 export async function eliminarEntrenadorYClientes(idEntrenador: number) {
     const conn = await conexion.getConnection();

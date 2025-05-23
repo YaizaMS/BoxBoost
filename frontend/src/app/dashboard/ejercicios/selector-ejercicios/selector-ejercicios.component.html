@@ -15,19 +15,19 @@
       <thead>
         <tr class="bg-primary text-white text-lg font-semibold">
           <th class="text-left px-4 py-2 rounded-tl-lg">Nombre</th>
+          <th class="text-left px-4 py-2">Descripción</th>
           <th class="text-left px-4 py-2">Dificultad</th>
           <th class="text-left px-4 py-2">Principal</th>
-          <th class="px-4 py-2 rounded-tr-lg"></th>
         </tr>
       </thead>
       <tbody class="text-base">
         @for (e of ejerciciosFiltrados; track $index) {
           <tr class="hover:bg-gray-100 transition">
             <td class="px-4 py-2">{{ e.nombre }}</td>
+            <td class="px-4 py-2">{{ e.descripcion }}</td>
             <td class="px-4 py-2">{{ e.dificultad }}</td>
             <td class="px-4 py-2">{{ e.musculo_principal }}</td>
-            <td class="px-4 py-2 text-center">
-            </td>
+
           </tr>
         }
       </tbody>
