@@ -88,51 +88,94 @@
                     </div>
                 </div>
             </div>
+            <!-- Tablero de ejercicios -->
+            @if (clienteEjercicios.length > 0) {
+            <div class="p-6">
+                <div class="overflow-x-auto rounded-xl shadow-lg bg-white">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead>
+                            <tr class="bg-primary-hover text-white text-2xl *:px-4 *:py-3 *:text-left">
+                                <th class="rounded-tl-xl">Nombre</th>
+                                <th>Series</th>
+                                <th>Reps</th>
+                                <th>Tiempo</th>
+                                <th>Peso</th>
+                                <th>Comentario</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            @for (e of clienteEjercicios; track $index) {
+                            <tr class="hover:bg-primary/10 transition text-lg">
+                                <td class="px-4 py-2 font-semibold">{{e.nombre}}</td>
+                                <td class="px-4 py-2">{{e.series}}</td>
+                                <td class="px-4 py-2">{{e.repeticiones}}</td>
+                                <td class="px-4 py-2">{{e.tiempo ?? '--'}} </td>
+                                <td class="px-4 py-2">{{e.peso}} Kg</td>
+                                <td class="px-4 py-2">{{e.notas ?? '--'}}</td>
+
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            }@else {
+            <div class="flex w-full justify-center">
+                <div class="text-center w-fit text-black/60 italic p-4 mt-4 bg-secondary rounded-lg shadow-sm">
+                    <span>
+                        ¡Hoy es día de descanso! 💪
+                        <br />
+                        No tienes ejercicios asignados.
+                    </span>
+                </div>
+            </div>
+            }
         </div>
     </div>
 </div>
-}@else {
-<div>
-    <div class="bg-primary p-4 sm:items-center border-x-2 rounded-b-lg">
-        <h1 class="text-white text-3xl font-exo p-4">Bienvenido/a {{ nombreUsuario }}</h1>
-    </div>
-    @if (clientes.length > 0) {
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-2">
-        @for (c of clientes; track $index) {
-        <div class="rounded-xl shadow bg-gray-200 flex flex-col min-h-[220px]">
-            <header class="bg-primary rounded-t-lg items-center justify-center p-4">
-                <span class="text-white text-2xl"> {{c.nombre}} {{c.apellidos}}</span>
-            </header>
-            <div class="flex px-4 py-2 items-center justify-between">
-                <span>
-                    {{c.objetivo}}
-                </span>
-            </div>
-            <div class="flex flex-col justify-between rounded-b-xl px-4">
-                <!-- Dias de entreno personal (me refiero a cada usuario) -->
-                <div class="flex gap-2 mb-3">
-                    @for(dia of diasSemana; track $index) {
-                    <span class="w-full flex items-center justify-center border-2 border-primary rounded-full font-bold"
-                     [ngClass]="{
+    }@else {
+    <div>
+        <div class="bg-primary p-4 sm:items-center border-x-2 rounded-b-lg">
+            <h1 class="text-white text-3xl font-exo p-4">Bienvenido/a {{ nombreUsuario }}</h1>
+        </div>
+        @if (clientes.length > 0) {
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-2">
+            @for (c of clientes; track $index) {
+            <div class="rounded-xl shadow bg-gray-200 flex flex-col min-h-[220px]">
+                <header class="bg-primary-hover rounded-t-lg items-center justify-center p-4">
+                    <span class="text-white text-2xl"> {{c.nombre}} {{c.apellidos}}</span>
+                </header>
+                <div class="flex px-4 py-2 items-center justify-between">
+                    <span>
+                        {{c.objetivo}}
+                    </span>
+                </div>
+                <div class="flex flex-col justify-between rounded-b-xl px-4">
+                    <!-- Dias de entreno personal (me refiero a cada usuario) -->
+                    <div class="flex gap-2 mb-3">
+                        @for(dia of diasSemana; track $index) {
+                        <span
+                            class="w-full flex items-center justify-center border-2 border-primary rounded-full font-bold"
+                            [ngClass]="{
                         'bg-primary text-white': c.disponibilidad.includes(dia),
                         'bg-white text-primary': !c.disponibilidad.includes(dia)
                         }">
-                        {{dia.charAt(0)}}
-                    </span>
+                            {{dia.charAt(0)}}
+                        </span>
                         }
-                </div>
-                <!-- Mensaje de aviso -->
-                <div class="p-2 rounded font-exo text-center">
-                    @if (c.disponibilidad.includes(diaSemana)) {
-                    <strong class="text-primary/70 font-exo text-2xl">Tienes que añadir ejercicios😊</strong>
-                    }@else {
-                        <strong class="text-black/20 font-exo text-2xl">¡Hoy tiene descanso!</strong>
-                    }
                     </div>
+                    <!-- Mensaje de aviso -->
+                    <div class="p-2 rounded font-exo text-center">
+                        @if (c.disponibilidad.includes(diaSemana)) {
+                        <strong class="text-primary/70 font-exo text-2xl">Tienes que añadir ejercicios😊</strong>
+                        }@else {
+                        <strong class="text-black/20 font-exo text-2xl">¡Hoy tiene descanso!</strong>
+                        }
+                    </div>
+                </div>
             </div>
+            }
         </div>
-        }
-    </div>
         }@else {
         <div class="flex flex-col w-full h-full gap-2 mt-10 items-center justify-center">
             <h1>¡Todavia no tienes clientes asociados!</h1>
@@ -140,6 +183,6 @@
             <img src="../../assets/image/Logo.png" alt="Logo" class="w-52 p-2">
         </div>
         }
-    
-</div>
-}
+
+    </div>
+    }

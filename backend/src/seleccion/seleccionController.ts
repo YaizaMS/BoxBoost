@@ -11,7 +11,6 @@ seleccionRouter.get(
             const codigo = req.params.codigo;
             const userId = req.params.userId;
             const result = await guardarCodigo(codigo, +userId);
-            console.log(result);
             res.status(200).json(result);
         } catch (error) {
             console.log(error);

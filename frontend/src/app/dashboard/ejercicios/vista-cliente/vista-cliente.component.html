@@ -1,3 +1,6 @@
+<div class="bg-secondary w-full h-full">
+
+
 <div class="bg-primary p-6 border-x-2 rounded-b-2xl shadow flex flex-col md:flex-row gap-6">
     <div>
         <div class="flex w-full items-center justify-center md:justify-start mb-4">
@@ -11,11 +14,11 @@
     </div>
 </div>
 @if(clienteEjercicios.length > 0) {
-<div class="p-6">
+<div class="p-6 ">
     <div class="overflow-x-auto rounded-xl shadow-lg bg-white">
         <table class="min-w-full divide-y divide-gray-200 text-sm">
             <thead>
-                <tr class="bg-primary text-white text-2xl *:px-4 *:py-3 *:text-left">
+                <tr class="bg-primary-hover text-white text-2xl *:px-4 *:py-3 *:text-left">
                     <th class="rounded-tl-xl">Nombre</th>
                     <th>Descripcion</th>
                     <th>Musculo principal</th>
@@ -38,10 +41,12 @@
                     <td class="px-4 py-2">{{e.tiempo ?? '--'}} </td>
                     <td class="px-4 py-2">{{e.peso}} Kg</td>
                     <td class="px-4 py-2">{{e.notas ?? '--'}}</td>
-                    <td>
-                        <a href={{e.video_url}} target="_blank"><i class="fa-solid fa-play-circle-play text-2xl"></i>
-                        </a>
+                    <td class="text-center">
+                            <a [href]="e.video_url" target="_blank">
+                                <i class="fa-solid fa-play-circle text-primary text-2xl"></i>
+                            </a>
                     </td>
+
 
                 </tr>
                 }
@@ -50,14 +55,15 @@
     </div>
 </div>
 }@else {
-    <div class="flex w-full justify-center">
-        <div class="text-center w-fit text-black/60 italic p-4 mt-4 bg-secondary rounded-lg shadow-sm">
-            <span>
-                ¡Hoy es día de descanso! 💪
-                <br />
-                No tienes ejercicios asignados.
-            </span>
-        </div>
+<div class="flex w-full justify-center">
+    <div class="text-center w-fit text-black/60 italic p-4 mt-4 bg-secondary rounded-lg shadow-sm">
+        <span>
+            ¡Hoy es día de descanso! 💪
+            <br />
+            No tienes ejercicios asignados.
+        </span>
     </div>
+</div>
 
 }
+</div>

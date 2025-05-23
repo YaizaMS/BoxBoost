@@ -1,5 +1,5 @@
 import { NextFunction, Router, Request, Response} from 'express';
-import { getUsuarioCliente, getUsuarioEntrenador, getUsuarios } from './perfilRepository';
+import { eliminarCuenta, eliminarEntrenadorYClientes, getUsuarioCliente, getUsuarioEntrenador, getUsuarios } from './perfilRepository';
 
 const perfilRouter = Router();
 
@@ -41,6 +41,33 @@ perfilRouter.get(
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: 'Error al encontrar a los usuarios que tienes a cargo' });
+        }
+    }
+)
+
+perfilRouter.delete(
+    '/eliminarEntrenadorYClientes/:id', 
+    async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.params.id;
+        const result = await eliminarEntrenadorYClientes(+id);
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Error al eliminar la cuenta' });
+    }
+})
+
+perfilRouter.delete(
+    '/eliminarCuenta/:id',
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id = req.params.id;
+            const result = await eliminarCuenta(+id);
+            res.status(200).json(result);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Error al eliminar la cuenta' });
         }
     }
 )

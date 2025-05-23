@@ -88,7 +88,6 @@ export class EjerciciosComponent implements OnInit {
   private service = inject(EjerciciosService);
 
   ngOnInit(): void {
-    console.log(this.selectDate);
     this.getEjercicios();
     this.selectCliente(this.entrenador!);
     this.infoCliente(this.entrenador!);
@@ -138,8 +137,6 @@ export class EjerciciosComponent implements OnInit {
   }
 
   guardarEjercicio() {
-    console.log(this.clienteSeleccionado);
-    console.log(this.ejercicioForm);
     this.service.guardarEjercicio(this.clienteSeleccionado, this.selectDate, this.ejercicioForm).subscribe({
       next: () => {
         this.getEjerciciosCliente(this.clienteSeleccionado);

@@ -25,7 +25,7 @@ export async function registro(
 
     // Inserta el usuario en la tabla de dardosUser
     const [sql2] = await conn.execute(
-      `INSERT INTO datosUser (nombre, apellidos, edad, email) VALUES (?,?,?,?,)`,
+      `INSERT INTO datosUser (nombre, apellidos, edad, email) VALUES (?,?,?,?)`,
 
       [registro.nombre, registro.apellidos, registro.edad, registro.email]
     );
@@ -37,7 +37,6 @@ export async function registro(
     // Inserta el usuario en la tabla de usuarios
     await conn.execute(
       `INSERT INTO usuarios (id_datosUser, user, pass) VALUES (?,?,?)`,
-
       [userId, usuario.user, cifrado]
     );
 
@@ -51,7 +50,7 @@ export async function registro(
       email: registro.email,
       edad: registro.edad,
       nombre: registro.nombre,
-      apellidos: registro.apellidos
+      apellidos: registro.apellidos,
     },
       SECRET_KEY, { expiresIn: '1h' });
 

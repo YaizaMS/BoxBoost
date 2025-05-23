@@ -53,8 +53,10 @@ export class PerfilComponent implements OnInit {
   usuario: Logueado[] = [];
   cliente: Cliente[] = [];
   usuarios: Usuarios[] = [];
+
   id = localStorage.getItem('id');
   perfil = localStorage.getItem('perfil');
+
   copiado: string | null = null;
 
   private authService = inject(AuthService);
@@ -62,14 +64,17 @@ export class PerfilComponent implements OnInit {
   private service = inject(PerfilService);
 
   ngOnInit(): void {
+    console.log(this.perfil, this.id);
     if (this.perfil === '1') {
       this.service.getPerfilEntrenador(this.id!).subscribe(data => {
         this.usuario = data;
+        console.log(data);
       });
       this.getUsuarios();
     } else {
       this.service.getPerfilCliente(this.id!).subscribe(data => {
         this.cliente = data;
+        console.log(data);
       });
     }
 
@@ -89,10 +94,9 @@ export class PerfilComponent implements OnInit {
   }
 
 
-  eliminarCuenta() {
-    //Deberia de haber una comprobacion de que si todavia tiene gente a cargo no pueda eliminar la cuenta, 
-    // ademas de ponerle un mensaje de aviso --> "Tienes personas a cargo, no puedes eliminar la cuenta"
-    Swal.fire({
+  async eliminarCuentaPropia() {
+  
+   const result = await Swal.fire({
       title: "¿Estás seguro?",
       icon: "warning",
       text: "Esta acción no se puede deshacer",
@@ -101,7 +105,62 @@ export class PerfilComponent implements OnInit {
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, eliminar cuenta"
     });
+
+    if (result.isConfirmed) {
+    this.service.eliminarEntrenadorYClientes(this.id!).subscribe({
+      next: () => {
+        Swal.fire({
+          title: "Cuenta eliminada",
+          icon: "success",
+          text: "La cuenta ha sido eliminada correctamente",
+        });
+        this.getUsuarios();
+      },
+      error: (err) => {
+        Swal.fire({
+          title: "Error al eliminar la cuenta",
+          icon: "error",
+          text: "Hubo un problema al eliminar la cuenta. Inténtalo de nuevo.",
+        });
+        console.error('Error:', err);
+      }
+    });
   }
+  }
+
+  async eliminarCuentaCliente(id: number) {
+
+  const result = await Swal.fire({
+    title: "¿Estás seguro?",
+    icon: "warning",
+    text: "Esta acción no se puede deshacer",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, eliminar cuenta",
+  });
+
+  if (result.isConfirmed) {
+    this.service.eliminarCuenta(id).subscribe({
+      next: () => {
+        Swal.fire({
+          title: "Cuenta eliminada",
+          icon: "success",
+          text: "La cuenta ha sido eliminada correctamente",
+        });
+        this.getUsuarios();
+      },
+      error: (err) => {
+        Swal.fire({
+          title: "Error al eliminar la cuenta",
+          icon: "error",
+          text: "Hubo un problema al eliminar la cuenta. Inténtalo de nuevo.",
+        });
+        console.error('Error:', err);
+      }
+    });
+  }
+}
 
   copiar(codigo: string) {
     navigator.clipboard.writeText(codigo).then(() => {
@@ -113,5 +172,6 @@ export class PerfilComponent implements OnInit {
       console.error('Error al copiar:', err);
     });
   }
+
 
 }

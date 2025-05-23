@@ -15,6 +15,9 @@ export class PerfilService {
   
   getPerfilCliente(id: string) {return this.http.get<Cliente[]>(`${this.api}/perfil/cliente/${id}`)};
 
+  getUsuarios(id: string) {return this.http.get<Usuarios[]>(`${this.api}/perfil/usuarios/${id}`)};
 
-  getUsuarios(id: string) {return this.http.get<Usuarios[]>(`${this.api}/perfil/usuarios/${id}`)}
+  eliminarCuenta(id: number) {return this.http.delete(`${this.api}/perfil/eliminarCuenta/${id}`)};
+
+  eliminarEntrenadorYClientes(id: string) {return this.http.delete(`${this.api}/perfil/eliminarEntrenadorYClientes/${id}`)};
 }

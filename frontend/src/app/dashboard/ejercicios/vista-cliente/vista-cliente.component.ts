@@ -51,7 +51,6 @@ export class VistaClienteComponent implements OnInit {
   getEjercicios() {
     this.service.getClienteEjerciciosCliente(this.cliente, this.selectDate).subscribe((data) => {
       this.clienteEjercicios = data;
-      console.log(data);
     });
   }
 }

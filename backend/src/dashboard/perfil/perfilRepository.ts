@@ -36,9 +36,70 @@ export async function getUsuarios(id: number) {
                     JOIN datosUser du ON ec.id_cliente = du.id
                     JOIN usuarios u ON u.id_datosUser = du.id
                     JOIN roles r ON du.perfil = r.id
-                    WHERE ec.id_entrenador = ?;`;	
+                    WHERE ec.id_entrenador = ?;`;
 
     const [rows] = await conexion.query(sql, [id]);
     return rows;
 
+}
+
+export async function eliminarCuenta(id: number) {
+    const conn = await conexion.getConnection();
+
+    try {
+        await conn.beginTransaction();
+
+        await conn.query('DELETE FROM usuarios WHERE id_datosUser = ?', [id]);
+        await conn.query('DELETE FROM cuestionarios WHERE user_id = ?', [id]);
+        await conn.query('DELETE FROM entrenadorClientes WHERE id_cliente = ?', [id]);
+        await conn.query('DELETE FROM entrenadorClientes WHERE id_entrenador = ?', [id]);
+        await conn.query('DELETE FROM datosUser WHERE id = ?', [id]);
+
+        await conn.commit();
+
+    } catch (err) {
+
+        await conn.rollback();
+        throw err;
+
+    } finally {
+
+        conn.release();
+
+    }
+}
+
+export async function eliminarEntrenadorYClientes(idEntrenador: number) {
+    const conn = await conexion.getConnection();
+    try {
+        await conn.beginTransaction();
+
+        const [clientes]: any = await conn.query(
+            'SELECT id_cliente FROM entrenadorClientes WHERE id_entrenador = ?',
+            [idEntrenador]
+        );
+
+        for (const cliente of clientes) {
+            const idCliente = cliente.id_cliente;
+
+            await conn.query('DELETE FROM usuarios WHERE id_datosUser = ?', [idCliente]);
+            await conn.query('DELETE FROM cuestionarios WHERE user_id = ?', [idCliente]);
+            await conn.query('DELETE FROM entrenadorClientes WHERE id_cliente = ?', [idCliente]);
+            await conn.query('DELETE FROM entrenadorClientes WHERE id_entrenador = ?', [idCliente]);
+            await conn.query('DELETE FROM datosUser WHERE id = ?', [idCliente]);
+        }
+
+        await conn.query('DELETE FROM entrenadorClientes WHERE id_entrenador = ?', [idEntrenador]);
+        await conn.query('DELETE FROM usuarios WHERE id_datosUser = ?', [idEntrenador]);
+        await conn.query('DELETE FROM cuestionarios WHERE user_id = ?', [idEntrenador]);
+        await conn.query('DELETE FROM datosUser WHERE id = ?', [idEntrenador]);
+
+        await conn.commit();
+        return { success: true };
+    } catch (err) {
+        await conn.rollback();
+        throw err;
+    } finally {
+        conn.release();
+    }
 }

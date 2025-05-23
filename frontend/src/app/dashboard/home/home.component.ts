@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { AuthService } from '../../auth.service';
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe, formatDate, NgClass } from '@angular/common';
 import { HomeService } from './home.service';
+import { EjerciciosService } from '../ejercicios/ejercicios.service';
 
 export type Notificaciones = {
   id: number,
@@ -36,6 +37,19 @@ export type Clientes = {
   dia: string
 }
 
+export type UserEjercicioCliente = {
+  user_id: number,
+  nombre: string,
+  descripcion: string,
+  musculo_principal: string,
+  fecha: Date,
+  series: number,
+  repeticiones: number,
+  peso: number,
+  tiempo?: number,
+  notas?: string,
+  video_url: string
+}
 
 @Component({
   selector: 'app-home',
@@ -46,12 +60,20 @@ export type Clientes = {
 export class HomeComponent implements OnInit {
 
   perfil = localStorage.getItem('perfil');
-  entrenador = Number(localStorage.getItem('id'));;
+  id = Number(localStorage.getItem('id'));;
   nombreUsuario = localStorage.getItem('nombre');
 
   clientes: Clientes[] = [];
 
+  clienteEjercicios: UserEjercicioCliente[] = [];
+  selectDate: string;
 
+  constructor() {
+    const hoy = new Date();
+    this.selectDate = formatDate(hoy, 'yyyy-MM-dd', 'en');
+  }
+  
+  
   //Variables calendario
   notificaciones: Notificaciones[] = [];
   ejercicios: Ejercicios[] = [];
@@ -76,9 +98,10 @@ export class HomeComponent implements OnInit {
 
   private auth = inject(AuthService);
   private service = inject(HomeService);
+  private service2 = inject(EjerciciosService);
 
   ngOnInit(): void {
-    this.service.getClientes(this.entrenador!).subscribe( (data) => {
+    this.service.getClientes(this.id!).subscribe( (data) => {
       this.clientes = data;
     });
 
@@ -90,6 +113,8 @@ export class HomeComponent implements OnInit {
     this.hoy = new Date().toISOString().substring(0, 10);
     this.year = +this.hoy.substring(0, 4);
     this.generarDiasMes();
+
+    this.getClienteEjerciciosCliente(this.id!);
 
   }
 
@@ -149,7 +174,12 @@ export class HomeComponent implements OnInit {
     }
     return this.day === fecha.getDate() && this.mes === fecha.getMonth() + 1;
   }
-  //Codigo entrenador 
+  
+  getClienteEjerciciosCliente(idCliente: number) {
+    this.service2.getClienteEjerciciosCliente(idCliente, this.selectDate).subscribe((data) => {
+      this.clienteEjercicios = data;
+    });
+  }
 
 
 }
