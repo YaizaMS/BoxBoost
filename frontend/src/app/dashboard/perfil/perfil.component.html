@@ -6,7 +6,8 @@
   <div class="m-4 flex flex-col gap-6">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="flex bg-secondary rounded-lg p-4 items-center">
-        @for (n of usuario; track $index) {
+        @if (perfil === "1") {
+        @for (n of usuario ; track $index) {
         <div>
           <p><strong class="text-primary font-exo text-2xl">Nombre: </strong>
             <span class="font-exo text-xl">{{ n.nombre }} {{ n.apellidos }}</span>
@@ -32,9 +33,26 @@
           </p>
         </div>
         }
+        }@else {
+        @for (n of cliente; track $index) {
+        <div>
+          <p><strong class="text-primary font-exo text-2xl">Nombre: </strong>
+            <span class="font-exo text-xl">{{ n.nombre }} {{ n.apellidos }}</span>
+          </p>
+
+          <p><strong class="text-primary font-exo text-2xl">Email: </strong>
+            <span class="font-exo text-xl">{{ n.email }}</span>
+          </p>
+
+          <p><strong class="text-primary font-exo text-2xl">Fecha de nacimiento: </strong>
+            <span class="font-exo text-xl">{{ n.edad | date: 'dd/MM/yyyy' }}</span>
+          </p>
+        </div>
+        }
+        }
       </div>
-      @for (n of usuario; track $index) {
       @if (perfil === "1") {
+      @for (n of usuario; track $index) {
       <div class="bg-secondary rounded-lg p-6 space-y-4 shadow">
         <strong class="text-primary font-exo text-2xl block mb-2">Personas a cargo:</strong>
         <div class="flex flex-wrap gap-4">
@@ -62,7 +80,9 @@
         </div>
       </div>
 
+      }
       }@else{
+      @for (n of cliente; track $index) {
       <div class="bg-secondary rounded-lg p-4 space-y-2">
         <p><strong class="text-primary font-exo text-2xl">Entrenador: </strong>
           <span class="font-exo text-xl">{{n.nombre_entrenador}} {{n.apellidos_entrenador}}</span>
@@ -87,8 +107,6 @@
             }
           </div>
         </div>
-
-
       </div>
       }
       }
